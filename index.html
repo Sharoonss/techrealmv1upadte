@@ -1,0 +1,1360 @@
+<!DOCTYPE html><html lang="en"><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        #loader-wrapper {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1000;
+            background-color: #ffffff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        #loader {
+            border: 5px solid #f3f3f3;
+            border-top: 5px solid #3498db;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            animation: spin 1s linear infinite;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .loaded #loader-wrapper {
+            visibility: hidden;
+            opacity: 0;
+            transition: all 0.3s ease-out;
+        }
+          .popup-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            backdrop-filter: blur(3px);
+        }
+
+        .popup-card {
+            background-color: white;
+            color: black;
+            max-width: 350px;
+            width: 90%;
+            position: relative;
+            text-align: center;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            overflow: hidden;
+            animation: slideIn 0.4s ease-out;
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateY(30px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .close-button {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: none;
+            border: none;
+            color: #333;
+            font-size: 1.2rem;
+            cursor: pointer;
+            padding: 5px;
+            line-height: 1;
+            z-index: 10;
+            transition: transform 0.2s;
+        }
+
+        .close-button:hover {
+            transform: scale(1.1);
+        }
+
+        .popup-title {
+            font-size: 1.4rem;
+            font-weight: 700;
+            margin: 0;
+            padding: 25px 20px 10px 20px;
+            position: relative;
+            color: #000;
+        }
+
+        .popup-title::after {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 50px;
+            height: 3px;
+            background-color: #000;
+            border-radius: 3px;
+        }
+
+        .popup-content {
+            padding: 15px 20px 0;
+        }
+
+        .popup-content p {
+            margin: 10px 0;
+            font-weight: 500;
+            font-size: 1.05rem;
+        }
+
+        .price-highlight {
+            color: #436cb8;
+            font-weight: 700;
+        }
+
+        .original-price {
+            font-size: 0.9rem;
+            color: #666;
+            margin: 5px 0 15px 0;
+            position: relative;
+            display: inline-block;
+        }
+
+        .button-container {
+            display: flex;
+            gap: 10px;
+            padding: 20px 20px 10px;
+        }
+
+        .email-button, .phone-button {
+            flex: 1;
+            padding: 12px 0;
+            border-radius: 6px;
+            border: none;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+         background-color: #000;
+
+        }
+
+        .email-button {
+            background-color: #000;
+            color: white;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .email-button:hover {
+            background-color: #222;
+            transform: translateY(-2px);
+        }
+
+        .phone-button {
+            background-color: white;
+            color: #000;
+            border: 1px solid #ddd;
+        }
+
+        .phone-button:hover {
+            background-color: #f5f5f5;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .email-input {
+            width: calc(100% - 40px);
+            margin: 15px 20px 10px;
+            padding: 14px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 14px;
+            box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s;
+        }
+
+        .email-input:focus {
+            outline: none;
+            border-color: #000;
+            box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.1);
+        }
+
+        .discount-button {
+            background-color: #000;
+            color: white;
+            border: none;
+            padding: 15px;
+            border-radius: 6px;
+            cursor: pointer;
+            width: calc(100% - 40px);
+            margin: 15px 20px 25px;
+            font-weight: 600;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
+
+        .discount-button:hover {
+            background-color: #333;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .shine-effect {
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 50px;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.2);
+            transform: skewX(-20deg);
+            animation: shine 3s infinite;
+        }
+
+        @keyframes shine {
+            0% {
+                left: -100%;
+            }
+            20% {
+                left: 100%;
+            }
+            100% {
+                left: 100%;
+            }
+        }
+
+        
+/* Announcement bar styling */
+.announcement-bar {
+background-color: #222;
+color: white;
+height:40px;
+overflow: hidden;
+position: relative;
+display: flex;
+white-space: nowrap;
+}
+.mainheader{
+    margin-top: 20px;
+        width:100%;
+        
+}
+.stg-col-6.in-view {
+    width: 700px;
+    padding-left:30px;
+    padding-right:30px;
+}
+.align-center.in-view {
+    margin-top: 40px;
+}
+.announcement-content {
+display: flex;
+position: absolute;
+animation: scroll-left 30s linear infinite;
+}
+
+.announcement-item {
+display: flex;
+align-items: center;
+margin-right: 40px;
+}
+
+.announcement-item a {
+color: white;
+text-decoration: none;
+transition: color 0.3s;
+}
+
+.announcement-item a:hover {
+color: #4877f8;
+}
+
+.flag-icon {
+height: 16px;
+margin-right: 8px;
+}
+
+.icon {
+height: 16px;
+margin-right: 8px;
+}
+.announcement-bar {
+position: fixed;
+top: 0;
+left: 0;
+width: 100%;
+background-color: #000; /* Adjust color as needed */
+color: #fff;
+text-align: center;
+padding: 0px 0;
+z-index: 1000;
+}
+
+.announcement-content {
+display: flex;
+justify-content: center;
+gap: 20px;
+}
+
+.announcement-item a {
+color: #fff;
+text-decoration: none;
+font-weight: bold;
+}
+@keyframes scroll-left {
+  0% {
+    transform: translateX(100%);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
+}
+
+.announcement-content {
+  display: flex;
+  position: absolute;
+  animation: scroll-left 30s linear infinite;
+  white-space: nowrap;
+}
+.section-video-bg {
+  position: relative;
+  overflow: hidden;
+  z-index: 1;
+}
+
+.section-background-video {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transform: translate(-50%, -50%);
+  z-index: 0;
+}
+
+.video-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5); /* Optional: adjust for contrast */
+  z-index: 1;
+}
+
+.section-content {
+  position: relative;
+  z-index: 2;
+  padding: 60px 0; /* Optional spacing */
+  color: white;
+}
+
+.tp-body{
+    padding-top: 100px;
+    padding-bottom: 120px;
+}
+.tp-heading {
+        font-size: 52px;
+        font-weight: 700;
+        color: #1887fd;
+        margin-bottom: 30px;
+        text-align: center;
+    }
+
+    .tp-subheading {
+        font-size: 18px;
+        color: #fdfdfd;
+        margin-bottom: 40px;
+        text-align: center;
+    }
+
+    .tp-container {
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 30px;
+    }
+
+    .tp-product-card {
+        width: 300px;
+        border-radius: 10px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        overflow: hidden;
+        background-color: white;
+        transition: transform 0.3s ease;
+    }
+
+    .tp-product-card:hover {
+        transform: translateY(-5px);
+    }
+
+    .tp-product-image {
+        width: 100%;
+        height: 220px;
+        overflow: hidden;
+        position: relative;
+    }
+
+    .tp-product-image img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.5s ease;
+    }
+
+    .tp-product-card:hover .tp-product-image img {
+        transform: scale(1.05);
+    }
+
+    .tp-product-info {
+        padding: 20px;
+    }
+
+    .tp-product-name {
+        font-size: 18px;
+        font-weight: 600;
+        margin-bottom: 8px;
+        color: #333;
+    }
+
+    .tp-product-price {
+        font-size: 22px;
+        font-weight: 700;
+        color: #1d5e91;
+        margin-bottom: 15px;
+    }
+
+    .tp-product-description {
+        font-size: 14px;
+        color: #666;
+        margin-bottom: 20px;
+        line-height: 1.4;
+        height: 80px;
+        overflow: hidden;
+    }
+
+    .tp-btn-buy {
+        display: block;
+        width: 100%;
+        padding: 12px 0;
+        background-color: #1d5e91;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        font-size: 16px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+
+    .tp-btn-buy:hover {
+        background-color: #144870;
+    }
+
+    .tp-btn-buy:active {
+        transform: scale(0.98);
+    }
+
+    .tp-notification {
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        background-color: #4caf50;
+        color: white;
+        padding: 15px 20px;
+        border-radius: 5px;
+        opacity: 0;
+        transform: translateY(-20px);
+        transition: all 0.3s ease;
+        box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+        z-index: 1000;
+    }
+
+    .tp-notification.tp-show {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    .tp-price-info {
+        font-size: 12px;
+        color: #666;
+        margin-top: 5px;
+        font-style: italic;
+    }
+
+    @media (max-width: 1000px) {
+        .tp-container {
+            flex-direction: column;
+            align-items: center;
+        }
+    }
+   </style>
+    <!-- Page Title -->
+    <title>Techrealm</title>
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+    <!-- Config -->
+    <link type="text/css" rel="stylesheet" href="css/config.css">
+    <!-- Libraries -->
+    <link type="text/css" rel="stylesheet" href="css/libs.css">
+    <!-- Template Styles -->
+    <link type="text/css" rel="stylesheet" href="css/style.css">
+    <!-- Responsive -->
+    <link type="text/css" rel="stylesheet" href="css/responsive.css">
+
+    <!-- Favicon -->
+    <link rel="icon" href="" sizes="32x32">
+</head>
+<body>
+    <div id="loader-wrapper">
+        <div id="loader"></div>
+    </div>
+     <div class="popup-overlay" id="popupOverlay">
+        <div class="popup-card">
+            <button class="close-button" onclick="closePopup()">×</button>
+            <h2 class="popup-title">Limited Time Offer!</h2>
+            <div class="popup-content">
+                <p>Get a complete holistic website for just <span class="price-highlight">$15!</span></p>
+                <p class="original-price">Original price: $500-$1500</p>
+            </div>
+            <div class="button-container">
+                <button class="email-button" id="emailBtn">Email</button>
+                <button class="phone-button" id="phoneBtn">Phone</button>
+            </div>
+            <input type="email" class="email-input" id="contactInput" placeholder="Enter your email">
+            <button class="discount-button" onclick="getDiscount()">
+                Get My Discount Now
+                <div class="shine-effect"></div>
+            </button>
+        </div>
+    </div>
+    <div class="announcement-bar">
+        <div class="announcement-content">
+            <div class="announcement-item">
+                <img src="/874-8745231_announcement-announce-icon-png-white.png" alt="Megaphone" width="20" height="20">
+                <a href="#">TECHREALM IS ACTIVELY WORKING IN EDUCATION INITIATIVE</a>
+            </div>
+            <div class="announcement-item">
+                <img src="/us-dollar-xxl.png" alt="Dollar Sign" width="20" height="20">
+                <a href="https://example.com">Donate A Dollar</a>
+            </div>
+            <div class="announcement-item">
+                <img src="/874-8745231_announcement-announce-icon-png-white.png" alt="Megaphone" width="20" height="20">
+                <a href="#">TECHREALM IS ACTIVELY WORKING IN EDUCATION INITIATIVE</a>
+            </div>
+            <div class="announcement-item">
+                <img src="/us-dollar-xxl.png" alt="Dollar Sign" width="20" height="20">
+                <a href="https://example.com">Donate A Dollar</a>
+            </div>
+        </div>
+        
+    </div>
+    <!-- Header -->
+    <header id="bringer-header" class="is-frosted is-sticky" data-appear="fade-down" data-unload="fade-up">
+        <!-- Desktop Header -->
+        <div class="bringer-header-inner">
+            <!-- Header Logo -->
+            <div class="bringer-header-lp">
+                <a href="./" class="bringer-logo">
+                  <h2 style="font-size:30px;">Tech<span style="color:rgb(78, 119, 253);">Realm</span></h2> 
+                </a>
+            </div>
+            <!-- Main Menu -->
+            <div class="bringer-header-mp">
+                <nav class="bringer-nav">
+                    <ul class="main-menu" data-stagger-appear="fade-down" data-stagger-delay="75">
+                        <li class="current-menu-parent">
+                            <a href="/index.html">Home</a>
+                        </li>
+                        <li>
+                            <a href="/about/about.html">About Us</a>
+                        </li>
+                        <li>
+                            <a href="/services/service.html">Our Services</a>
+                        </li>
+                        <li>
+                            <a href="/portfolio/folio.html">Portfolio</a>
+                        </li>
+                        <li>
+                            <a href="/contact/contact.html">Contact</a>
+                        </li>
+                        <li>
+                            <a href="/blog/blog.html">Blog</a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+            <!-- Header Button -->
+            <div class="bringer-header-rp">
+                <a href="https://wa.me/923461115757?text=Directly%20Contact%20our%20CEO%21" class="bringer-button">Get a FREE Quote</a>
+            </div>
+        </div>
+        <!-- Mobile Header -->
+        <div class="bringer-mobile-header-inner">
+            <a href="./" class="bringer-logo">
+                <h2 style="font-size:30px;">Tech<span style="color:rgb(78, 119, 253);">Realm</span></h2> 
+            </a>
+            <a href="#" class="bringer-mobile-menu-toggler">
+                <i class="bringer-menu-toggler-icon">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </i>
+            </a>
+        </div>
+    </header>
+    <!-- Page Main -->
+    <main id="bringer-main">
+        <div class="stg-container">
+            <!-- Hero Section -->
+            <section>
+                <div class="bringer-hero-block bringer-hero-type01">
+                    <!-- Main Line -->
+                    <div class="stg-row stg-bottom-gap-l stg-m-bottom-gap-l">
+                        <div class="stg-col-9 stg-tp-col-8 stg-m-col-12">
+                            <!-- Title -->
+                            <h1 class="bringer-page-title" data-split-appear="fade-up" data-split-unload="fade-up">Innovation at Your Fingertips, Future in Your Hands.</h1>
+                        </div>
+                        <div class="stg-col-3 stg-tp-col-4 stg-m-col-12">
+                            <!-- Social Proof -->
+                            <div class="bringer-hero-social-proof">
+                                <div data-stagger-appear="fade-up" data-stagger-delay="100" data-stagger-unload="fade-up">
+                                    <img src="/images/social-proof01.jpg" alt="Client 01">
+                                    <img src="/images/social-proof02.jpg" alt="Client 02">
+                                    <img src="/images/social-proof03.jpg" alt="Client 03">
+                                    <a href="testimonials.html">24K+</a>
+                                </div>
+                                <p data-appear="fade-up" data-unload="fade-up" data-delay="200">Trusted by 24K+ clients</p>
+                            </div>
+                        </div>
+                    </div><!-- .stg-row -->
+
+                    <!-- Masked Media Container -->
+                    <div class="bringer-hero-media-wrap bringer-masked-bottom-right bringer-masked-block stg-bottom-gap-l" data-appear="zoom-out" data-unload="zoom-out">
+                        <!-- Masked Media -->
+                        <div class="bringer-masked-media bringer-masked-media bringer-parallax-media">
+                            <img src="/images/home01-hero.jpg" alt="Unleash Your Creativity">
+                        </div>
+                        <!-- Content -->
+                        <div class="bringer-masked-content at-bottom-right">
+                            <a href="#page01" class="bringer-square-button" data-appear="fade-left">
+                                <span class="bringer-icon bringer-icon-arrow-down"></span>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Additional Information Line -->
+                    <div class="stg-row stg-valign-bottom">
+                        <div class="stg-col-3 stg-tp-col-3 stg-m-col-6" data-appear="fade-up" data-delay="200" data-unload="fade-up">
+                            <div class="bringer-counter bringer-small-counter" data-delay="3000">
+                                <div class="bringer-counter-number">420</div>
+                                <div class="bringer-counter-label">Complated Projects</div>
+                            </div><!-- .bringer-counter -->
+                        </div>
+                        <div class="stg-col-3 stg-tp-col-3 stg-m-col-6" data-appear="fade-up" data-delay="300" data-unload="fade-up">
+                            <div class="bringer-counter bringer-small-counter" data-delay="3000">
+                                <div class="bringer-counter-number" data-suffix="+">12</div>
+                                <div class="bringer-counter-label">Years of Experience</div>
+                            </div><!-- .bringer-counter -->
+                        </div>
+                        <div class="stg-col-6 stg-tp-col-6 stg-m-col-12 stg-m-top-gap" data-appear="fade-up" data-delay="400" data-unload="fade-up">
+                            <p class="bringer-large-text">We help agencies, Innovators, and other Tech Dreamers To Transform their concept into a tangible reality.</p>
+                        </div>
+                    </div><!-- .stg-row -->
+                </div><!-- .bringer-hero-block -->
+            </section>
+
+          <!-- Section: About Us -->
+          <section class="backlight-bottom divider-top section-video-bg">
+            <video autoplay muted loop playsinline class="section-background-video">
+              <source src="/FInal Banner Video.mp4" type="video/mp4">
+              Your browser does not support the video tag.
+            </video>
+          
+            <div class="video-overlay"></div>
+          
+            <div class="stg-row stg-large-gap stg-valign-middle stg-tp-column-reverse section-content">
+              <div class="stg-col-6" data-appear="fade-right" data-unload="fade-left">
+                <h3>TechRealm | Innovating with Design & Development</h3>
+                <p class="bringer-large-text">
+                  We are a driven team of designers and developers who believe in harnessing creativity for impactful solutions.
+                </p>
+                <p>
+                  We are a dedicated team of skilled designers, developers, and marketers focused on helping businesses grow. We believe creativity drives success and are committed to unlocking our clients' full potential.
+                </p>
+                <div class="align-right">
+                  <a href="/about/about.html" class="bringer-arrow-link">Learn More About Us</a>
+                </div>
+              </div>
+              <div class="stg-col-6 stg-tp-bottom-gap-l stg-m-bottom-gap" data-unload="fade-right" data-appear="fade-left">
+                <!-- You can add more content or leave this column empty -->
+              </div>
+            </div>
+          </section>
+          
+          
+  
+
+            <!-- Section: Portfolio Carousel -->
+            <section class="is-fullwidth is-stretched">
+                <!-- Section Title -->
+                <div class="stg-row bringer-section-title is-boxed">
+                    <div class="stg-col-8 stg-offset-2">
+                        <div class="align-center">
+                            <h2 data-appear="fade-up" data-unload="fade-up">Our Work</h2>
+                            <p class="bringer-large-text" data-appear="fade-up" data-unload="fade-up" data-delay="100">We are proud of our work, and we are always looking for new challenges. Take a look at some of our recent portfolio:</p>
+                        </div>
+                    </div>
+                </div>
+                <!-- Portfolio Carousel -->
+                <div class="swiper bringer-carousel stg-bottom-gap-l" data-appear="fade-up" data-unload="fade-up" data-delay="200" data-count="4" data-m-count="1.5">
+                    <div class="swiper-wrapper">
+                        <!-- Card Item 01 -->
+                        <div class="bringer-block bringer-portfolio-card swiper-slide">
+                            <div class="bringer-portfolio-card-image">
+                                <img class="bringer-lazy" src="./logos/dsm.png" data-src="./logos/dsm.png" alt="" width="1200" height="1200">
+                            </div>
+                            <div class="bringer-portfolio-card-footer">
+                                <div class="bringer-portfolio-card-title">
+                                    <span class="bringer-meta"></span>
+                                    <h6>Digital Software Market</h6>
+                                </div>
+                                <span class="bringer-icon bringer-icon-explore"></span>
+                            </div>
+                            <a href="https://digitalsoftwaremarkett.com"></a>
+                        </div><!-- .bringer-portfolio-card -->
+                                                
+                        <!-- Card Item 02 -->
+                        <div class="bringer-block bringer-portfolio-card swiper-slide">
+                            <div class="bringer-portfolio-card-image">
+                                <img class="bringer-lazy" src="./logos/zuhd.jpg" data-src="./logos/zuhd.jpg" alt="" width="1200" height="1200">
+                            </div>
+                            <div class="bringer-portfolio-card-footer">
+                                <div class="bringer-portfolio-card-title">
+                                    <span class="bringer-meta"></span>
+                                    <h6>Zuhd Store</h6>
+                                </div>
+                                <span class="bringer-icon bringer-icon-explore"></span>
+                            </div>
+                            <a href="https://zuhd.store"></a>
+                        </div><!-- .bringer-portfolio-card -->
+                                                
+                        <!-- Card Item 03 -->
+                        <div class="bringer-block bringer-portfolio-card swiper-slide">
+                            <div class="bringer-portfolio-card-image">
+                                <img class="bringer-lazy" src="./logos/kH.jpg" data-src="./logos/kH.jpg" alt="" width="1200" height="1200">
+                            </div>
+                            <div class="bringer-portfolio-card-footer">
+                                <div class="bringer-portfolio-card-title">
+                                    <span class="bringer-meta"></span>
+                                    <h6>Kelvin Haus Store</h6>
+                                </div>
+                                <span class="bringer-icon bringer-icon-explore"></span>
+                            </div>
+                            <a href="https://kelvinhaus.com"></a>
+                        </div><!-- .bringer-portfolio-card -->
+                                                
+                        <!-- Card Item 04 -->
+                        <div class="bringer-block bringer-portfolio-card swiper-slide">
+                            <div class="bringer-portfolio-card-image">
+                                <img class="bringer-lazy" src="/logos/ummah.png" data-src="/logos/ummah.png" alt="" width="1200" height="1200">
+                            </div>
+                            <div class="bringer-portfolio-card-footer">
+                                <div class="bringer-portfolio-card-title">
+                                    <span class="bringer-meta"></span>
+                                    <h6> Ummah.</h6>
+                                </div>
+                                <span class="bringer-icon bringer-icon-explore"></span>
+                            </div>
+                            <a href="https://ummahdirectory.com.au"></a>
+                        </div><!-- .bringer-portfolio-card -->
+                                                
+                        <!-- Card Item 05 -->
+                        <div class="bringer-block bringer-portfolio-card swiper-slide">
+                            <div class="bringer-portfolio-card-image">
+                                <img class="bringer-lazy" src="logos/vgood.png" data-src="logos/vgood.png" alt="" width="1200" height="1200">
+                            </div>
+                            <div class="bringer-portfolio-card-footer">
+                                <div class="bringer-portfolio-card-title">
+                                    <span class="bringer-meta"></span>
+                                    <h6>A Very Good Agency</h6>
+                                </div>
+                                <span class="bringer-icon bringer-icon-explore"></span>
+                            </div>
+                            <a href="https://averygoodagency.com/"></a>
+                        </div><!-- .bringer-portfolio-card -->
+                            <!-- Card Item 05 -->
+                        <div class="bringer-block bringer-portfolio-card swiper-slide">
+                            <div class="bringer-portfolio-card-image">
+                                <img class="bringer-lazy" src="logos/klientas.png" data-src="logos/klientas.png" alt="" width="1200" height="1200">
+                            </div>
+                            <div class="bringer-portfolio-card-footer">
+                                <div class="bringer-portfolio-card-title">
+                                    <span class="bringer-meta"></span>
+                                    <h6>|Klientas</h6>
+                                </div>
+                                <span class="bringer-icon bringer-icon-explore"></span>
+                            </div>
+                            <a href="https://klientas.com"></a>
+                        </div><!-- .bringer-portfolio-card -->
+                                                                      
+                           <!-- Card Item 06 -->
+                        <div class="bringer-block bringer-portfolio-card swiper-slide">
+                            <div class="bringer-portfolio-card-image">
+                                <img class="bringer-lazy" src="logos/bookshop.png" data-src="/logos/bookshop.png" alt="" width="1200" height="1200">
+                            </div>
+                            <div class="bringer-portfolio-card-footer">
+                                <div class="bringer-portfolio-card-title">
+                                    <span class="bringer-meta"></span>
+                                    <h6>|Al-Ihsan Bookshop</h6>
+                                </div>
+                                <span class="bringer-icon bringer-icon-explore"></span>
+                            </div>
+                            <a href="https://al-ihsan.shop"></a>
+                        </div><!-- .bringer-portfolio-card -->
+                         <!-- Card Item 07 -->
+                         <div class="bringer-block bringer-portfolio-card swiper-slide">
+                            <div class="bringer-portfolio-card-image">
+                                <img class="bringer-lazy" src="/logos/lexaj.png" data-src="/logos/lexaj.png" alt="" width="1200" height="1200">
+                            </div>
+                            <div class="bringer-portfolio-card-footer">
+                                <div class="bringer-portfolio-card-title">
+                                    <span class="bringer-meta"></span>
+                                    <h6>|Lexa</h6>
+                                </div>
+                                <span class="bringer-icon bringer-icon-explore"></span>
+                            </div>
+                            <a href="https://www.lexa.lawyer"></a>
+                        </div><!-- .bringer-portfolio-card -->                                                                                                   
+                        <div class="bringer-block bringer-portfolio-card swiper-slide">
+                            <div class="bringer-portfolio-card-image">
+                                <img class="bringer-lazy" src="/logos/glenny.png" data-src="/logos/glenny.png" alt="" width="1200" height="1200">
+                            </div>
+                            <div class="bringer-portfolio-card-footer">
+                                <div class="bringer-portfolio-card-title">
+                                    <span class="bringer-meta"></span>
+                                    <h6>|Glenny Kebabs</h6>
+                                </div>
+                                <span class="bringer-icon bringer-icon-explore"></span>
+                            </div>
+                            <a href="https://www.glennykebabs.com/"></a>
+                        </div><!-- .bringer-portfolio-card --> 
+                        <div class="bringer-block bringer-portfolio-card swiper-slide">
+                            <div class="bringer-portfolio-card-image">
+                                <img class="bringer-lazy" src="/logos/profarm.png" data-src="/logos/profarm.png" alt="" width="1200" height="1200">
+                            </div>
+                            <div class="bringer-portfolio-card-footer">
+                                <div class="bringer-portfolio-card-title">
+                                    <span class="bringer-meta"></span>
+                                    <h6>|profarm</h6>
+                                </div>
+                                <span class="bringer-icon bringer-icon-explore"></span>
+                            </div>
+                            <a href="https://www.profarm.com.pk/"></a>
+                        </div> 
+                        <div class="bringer-block bringer-portfolio-card swiper-slide">
+                            <div class="bringer-portfolio-card-image">
+                                <img class="bringer-lazy" src="/logos/ulady.png" data-src="/logos/ulady.png" alt="" width="1200" height="1200">
+                            </div>
+                            <div class="bringer-portfolio-card-footer">
+                                <div class="bringer-portfolio-card-title">
+                                    <span class="bringer-meta"></span>
+                                    <h6>|Ulady</h6>
+                                </div>
+                                <span class="bringer-icon bringer-icon-explore"></span>
+                            </div>
+                            <a href="https://ulady.net/"></a>
+                        </div> 
+                        
+                        <div class="bringer-block bringer-portfolio-card swiper-slide">
+                            <div class="bringer-portfolio-card-image">
+                                <img class="bringer-lazy" src="/logos/dsp.png" data-src="/logos/dsp.png" alt="" width="1200" height="1200">
+                            </div>
+                            <div class="bringer-portfolio-card-footer">
+                                <div class="bringer-portfolio-card-title">
+                                    <span class="bringer-meta"></span>
+                                    <h6>|Digital Software Planet</h6>
+                                </div>
+                                <span class="bringer-icon bringer-icon-explore"></span>
+                            </div>
+                            <a href="https://www.digitalsoftwareplanet.com/"></a>
+                        </div> 
+
+                        <div class="bringer-block bringer-portfolio-card swiper-slide">
+                            <div class="bringer-portfolio-card-image">
+                                <img class="bringer-lazy" src="/logos/dotlegal.png" data-src="/logos/dotlegal.png" alt="" width="1200" height="1200">
+                            </div>
+                            <div class="bringer-portfolio-card-footer">
+                                <div class="bringer-portfolio-card-title">
+                                    <span class="bringer-meta"></span>
+                                    <h6>|Dot Legal</h6>
+                                </div>
+                                <span class="bringer-icon bringer-icon-explore"></span>
+                            </div>
+                            <a href="https://www.dotlegal.com.au/"></a>
+                        </div> 
+                        <div class="bringer-block bringer-portfolio-card swiper-slide">
+                            <div class="bringer-portfolio-card-image">
+                                <img class="bringer-lazy" src="/logos/aljash.png" data-src="/logos/aljash.png" alt="" width="1200" height="1200">
+                            </div>
+                            <div class="bringer-portfolio-card-footer">
+                                <div class="bringer-portfolio-card-title">
+                                    <span class="bringer-meta"></span>
+                                    <h6>|Aljash Trading</h6>
+                                </div>
+                                <span class="bringer-icon bringer-icon-explore"></span>
+                            </div>
+                            <a href="https://aljashtrading.com/"></a>
+                        </div> 
+                        <div class="bringer-block bringer-portfolio-card swiper-slide">
+                            <div class="bringer-portfolio-card-image">
+                                <img class="bringer-lazy" src="/logos/migicpk.png" data-src="/logos/migicpk.png" alt="" width="1200" height="1200">
+                            </div>
+                            <div class="bringer-portfolio-card-footer">
+                                <div class="bringer-portfolio-card-title">
+                                    <span class="bringer-meta"></span>
+                                    <h6>|Magic.pk</h6>
+                                </div>
+                                <span class="bringer-icon bringer-icon-explore"></span>
+                            </div>
+                            <a href="https://magic.pk/"></a>
+                        </div> 
+                        <div class="bringer-block bringer-portfolio-card swiper-slide">
+                            <div class="bringer-portfolio-card-image">
+                                <img class="bringer-lazy" src="/logos/migicpk.png" data-src="/logos/migicpk.png" alt="" width="1200" height="1200">
+                            </div>
+                            <div class="bringer-portfolio-card-footer">
+                                <div class="bringer-portfolio-card-title">
+                                    <span class="bringer-meta"></span>
+                                    <h6>|Magic.pk</h6>
+                                </div>
+                                <span class="bringer-icon bringer-icon-explore"></span>
+                            </div>
+                            <a href="https://magic.pk/"></a>
+                        </div> 
+                    </div>
+                    <!-- Pagination -->
+                    <div class="swiper-pagination bringer-dots"></div>
+                </div><!-- .bringer-portfolio-carousel -->
+                <div class="align-center" data-appear="fade-up" data-unload="fade-up" data-delay="100">
+                    <a href="./portfolio/folio.html" class="bringer-button">Discover Full Portfolio</a>
+                </div>
+            </section>
+
+            <!-- Section: Our Services -->
+            <section class="backlight-top">
+                <!-- Section Title -->
+                <div class="stg-row bringer-section-title">
+                    <div class="stg-col-8 stg-offset-2">
+                        <div class="align-center">
+                            <h2 data-appear="fade-up" data-unload="fade-up">Our Services</h2>
+                            <p class="bringer-large-text" data-appear="fade-up" data-unload="fade-up" data-delay="100">We provide a comprehensive range of IT services designed to help businesses of all sizes succeed.  Our services include:</p>
+                        </div>
+                    </div>
+                </div>
+                <!-- Services List -->
+                <div class="bringer-detailed-list-wrap" data-appear="fade-up" data-unload="fade-up" data-delay="200">
+                    <ul class="bringer-detailed-list">
+                        <li>
+                            <div class="bringer-detailed-list-title">
+                                <h4>Software Development<span class="bringer-accent">.</span></h4>
+                            </div>
+                            <div class="bringer-detailed-list-description">
+                                <p>We develop custom software solutions tailored to your business needs, ensuring efficiency, scalability, and seamless user experience.</p>
+                            </div>
+                            <div class="bringer-detailed-list-button">
+                                <span class="bringer-icon bringer-icon-explore"></span>
+                            </div>
+                            <a href="https://wa.me/923461115757?text=Directly%20Contact%20our%20CEO%21"></a>
+                        </li>
+                        <li>
+                            <div class="bringer-detailed-list-title">
+                                <h4>Ai Development<span class="bringer-accent">.</span></h4>
+                            </div>
+                            <div class="bringer-detailed-list-description">
+                                <p>We create advanced AI solutions, including machine learning and automation, to enhance efficiency, decision-making, and business growth.</p>
+                            </div>
+                            <div class="bringer-detailed-list-button">
+                                <span class="bringer-icon bringer-icon-explore"></span>
+                            </div>
+                            <a href="https://wa.me/923461115757?text=Directly%20Contact%20our%20CEO%21"></a>
+                        </li>
+                        <li>
+                            <div class="bringer-detailed-list-title">
+                                <h4>IT investment <span class="bringer-accent">.</span></h4>
+                            </div>
+                            <div class="bringer-detailed-list-description">
+                                <p>We provide strategic IT investment solutions, helping businesses optimize technology spending for maximum growth and efficiency.</p>
+                            </div>
+                            <div class="bringer-detailed-list-button">
+                                <span class="bringer-icon bringer-icon-explore"></span>
+                            </div>
+                            <a href="https://wa.me/923461115757?text=Directly%20Contact%20our%20CEO%21"></a>
+                        </li>
+                        <li>
+                            <div class="bringer-detailed-list-title">
+                                <h4>Infrastructure management and deployment <span class="bringer-accent">.</span></h4>
+                            </div>
+                            <div class="bringer-detailed-list-description">
+                                <p>We design, deploy, and manage IT infrastructure to ensure scalability, security, and optimal performance for your business operations.</p>
+                            </div>
+                            <div class="bringer-detailed-list-button">
+                                <span class="bringer-icon bringer-icon-explore"></span>
+                            </div>
+                            <a href="https://wa.me/923461115757?text=Directly%20Contact%20our%20CEO%21"></a>
+                        </li>
+                        <li>
+                            <div class="bringer-detailed-list-title">
+                                <h4>Digital marketing<span class="bringer-accent">.</span></h4>
+                            </div>
+                            <div class="bringer-detailed-list-description">
+                                <p>We offer data-driven digital marketing solutions, including SEO, social media, and paid ads, to boost brand visibility and drive conversions.</p>
+                            </div>
+                            <div class="bringer-detailed-list-button">
+                                <span class="bringer-icon bringer-icon-explore"></span>
+                            </div>
+                            <a href=""></a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="align-center stg-top-gap" data-appear="fade-up" data-unload="zoom-out" data-delay="100">
+                    <a href="https://wa.me/923461115757?text=Directly%20Contact%20our%20CEO%21" class="bringer-button">Explore All Services</a>
+                </div>
+            </section>
+            <div class="tp-body">
+                <h1 class="tp-heading">TechRealm Products</h1>
+                <p class="tp-subheading">Smart Ring Technology - Innovation at Your Fingertips</p>
+                
+                <div class="tp-container">
+                    <!-- Product Card 1 -->
+                    <div class="tp-product-card">
+                        <div class="tp-product-image">
+                            <img src="/images/ring1  (1).jpeg" alt="Smart Ring">
+                        </div>
+                        <div class="tp-product-info">
+                            <div class="tp-product-name">TechRealm Smart Ring Pro</div>
+                            <div class="tp-product-price">1 AED</div>
+                            <div class="tp-price-info">(Payment amount: 100)</div>
+                            <div class="tp-product-description">
+                                Control your digital life with a gesture. Features activity tracking, notifications, and contactless payments in an elegant design.
+                            </div>
+                            <button class="tp-btn-buy" onclick="tpInitiatePayment(100, 'TechRealm Smart Ring Pro')">Pay Now</button>
+                        </div>
+                    </div>
+                    
+                    <!-- Product Card 2 -->
+                    <div class="tp-product-card">
+                        <div class="tp-product-image">
+                            <img src="/images/ring.jpeg" alt="Smart Ring Plus">
+                        </div>
+                        <div class="tp-product-info">
+                            <div class="tp-product-name">TechRealm Smart Ring Plus</div>
+                            <div class="tp-product-price">2 AED</div>
+                            <div class="tp-price-info">(Payment amount: 200)</div>
+                            <div class="tp-product-description">
+                                Advanced health monitoring with sleep tracking, heart rate, and SpO2 sensors in our premium titanium smart ring.
+                            </div>
+                            <button class="tp-btn-buy" onclick="tpInitiatePayment(200, 'TechRealm Smart Ring Plus')">Pay Now</button>
+                        </div>
+                    </div>
+                    
+                    <!-- Product Card 3 -->
+                    <div class="tp-product-card">
+                        <div class="tp-product-image">
+                            <img src="/images/ring1  (3).jpeg" alt="Smart Ring Lite">
+                        </div>
+                        <div class="tp-product-info">
+                            <div class="tp-product-name">TechRealm Smart Ring Lite</div>
+                            <div class="tp-product-price">1.5 AED</div>
+                            <div class="tp-price-info">(Payment amount: 150)</div>
+                            <div class="tp-product-description">
+                                Our entry-level smart ring with essential features. Perfect for notifications and basic fitness tracking in a lightweight design.
+                            </div>
+                            <button class="tp-btn-buy" onclick="tpInitiatePayment(150, 'TechRealm Smart Ring Lite')">Pay Now</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="align-center stg-top-gap" data-appear="fade-up" data-unload="zoom-out" data-delay="100">
+                    <a href="https://wa.me/923461115757?text=Directly%20Contact%20our%20CEO%21" class="bringer-button">Techrealm Store</a>
+                </div>
+                <div class="tp-notification" id="tpNotification">
+                    Redirecting to payment gateway...
+                </div>
+            </div>
+            <!-- Section: CTA -->
+            <section data-padding="bottom">
+                <div class="bringer-masked-cta bringer-masked-block" data-unload="fade-down">
+                    <form action="mail-short.php" method="post" data-fill-error="Please, fill out the form." class="bringer-contact-form is-short bringer-masked-media" data-appear="fade-up">
+                        <div class="bringer-form-content bringer-cta-form">
+                            <div class="bringer-cta-form-content" data-appear="fade-up" data-delay="100">
+                                <div class="bringer-cta-title">Ready to set your Brand ablaze?</div>
+                                <input type="email" id="subscribe_email" name="subscribe_email" placeholder="email@example.com" required="">
+                            </div>
+                            <div class="bringer-cta-form-button" data-appear="fade-up" data-delay="200">
+                                <button type="submit">
+                                    <span class="bringer-icon bringer-icon-arrow-submit"></span>
+                                </button>
+                            </div>
+                            <div class="bringer-contact-form__response"></div>
+                        </div>
+                        <span class="bringer-form-spinner"></span>
+                    </form>
+                    <div class="bringer-masked-cta-content bringer-masked-content at-top-right">
+                        <p class="bringer-large-text" data-appear="fade-down">Let's craft a visual identity that ignites passion and loyalty. ✨</p>
+                    </div>
+                </div>
+            </section>
+        </div><!-- .stg-container -->
+
+        <!-- Footer -->
+        <footer id="bringer-footer" data-appear="fade-up" data-unload="fade-down">
+            <!-- Footer Widgets Area -->
+            <div class="bringer-footer-widgets">
+                <div class="stg-container">
+                    <div class="stg-row" data-stagger-appear="fade-left" data-stagger-delay="100">
+                        <div class="stg-col-5 stg-tp-col-12 stg-tp-bottom-gap-l">
+                            <div class="bringer-info-widget">
+                                <a href="./" class="bringer-logo footer-logo">
+                                    <h2 style="font-size:30px;">Tech<span style="color:rgb(78, 119, 253);">Realm</span></h2> 
+
+                                </a>
+                                <div class="bringer-info-description">At TechRealm, we are a passionate team of developers and designers who harness creativity to build powerful digital experiences. We help innovators establish a strong online presence that showcases their work and tells their unique story.</div>
+                                <span class="bringer-label">Email us:Info@techrealm.pk </span>
+                                <span class="bringer-label">Contact us:971589428826 </span>
+                                <span class="bringer-label">Follow us:</span>
+                                <ul class="bringer-socials-list" data-stagger-appear="fade-up" data-stagger-delay="75">
+                                    <li>
+                                        <a href="https://www.facebook.com/TechRealm.Pakistan" target="_blank" class="bringer-socials-facebook">
+                                            <i></i>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#" target="_blank" class="bringer-socials-instagram">
+                                            <i></i>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#" target="_blank" class="bringer-socials-x">
+                                            <i></i>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#" target="_blank" class="bringer-socials-tiktok">
+                                            <i></i>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="https://www.linkedin.com/company/93270722/
+                                        " target="_blank" class="bringer-socials-patreon">
+                                            <i></i>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="https://www.linkedin.com/company/techrealm/" 
+                                           target="_blank" 
+                                           class="bringer-socials-linkedin">
+                                            <i class="fab fa-linkedin"></i>
+                                        </a>
+                                    </li>
+                                    
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="stg-col-2 stg-offset-1 stg-tp-col-4 stg-m-col-4">
+                            <div class="bringer-widget">
+                                <h6>Services</h6>
+                                <div class="bringer-menu-widget">
+                                    <ul>
+                                        <li><a href="service-details.html">Software Development</a></li>
+                                        <li><a href="service-details.html">AI Development</a></li>
+                                        <li><a href="service-details.html">Digital Marketing</a></li>
+                                        <li><a href="service-details.html">Ecommerce integration</a></li>
+                                        <li><a href="service-details.html">Products</a></li>
+                                    </ul>
+                                </div>
+                            </div><!-- .bringer-widget -->
+                        </div>
+                        <div class="stg-col-2 stg-tp-col-4 stg-m-col-4">
+                            <div class="bringer-widget">
+                                <h6>Our Locations</h6>
+                                <div class="bringer-menu-widget">
+                                    <ul>
+                                        <li><a href="location-dubai.html">Dubai:Building Number 1, Baniyas West Fourth, Baniyas Abu Dhabi, UAE</a></li>
+                                        <li><a href="location-newyork.html">Australia branch:29 Newhaven Dr, Williams Landing VIC 3027, Australia </a></li>
+                                        <li><a href="location-london.html">Usa branch:339 W Gorham St, Madison, WI 53703, United States</a></li>
+                                        <li><a href="location-toronto.html">Pakistan branch:GTC 1st Floor , 8-F, Gulberg 2, Lahore, Pakistan </a></li>
+                                        <li><a href="location-sydney.html">India branch:B-132, B Block, Sector 2, Noida, Uttar Pradesh 201301, India </a></li>
+                                    </ul>
+                                </div>
+                            </div><!-- .bringer-widget -->
+                        </div>
+                        
+                        <div class="stg-col-2 stg-tp-col-4 stg-m-col-4">
+                            <div class="bringer-widget">
+                                <h6>Resources</h6>
+                                <div class="bringer-menu-widget">
+                                    <ul>
+                                        <li><a href="pricing.html">Pricing</a></li>
+                                        <li><a href="faq.html">Help Center</a></li>
+                                        <li><a href="services.html">Our Services</a></li>
+                                        <li><a href="#">Terms of Use</a></li>
+                                        <li><a href="#">Privacy Policy</a></li>
+                                    </ul>
+                                </div>
+                            </div><!-- .bringer-widget -->
+                        </div>
+                    </div><!-- .stg-row -->
+                </div><!-- .stg-container -->
+            </div><!-- .bringer-footer-widgets -->
+
+            <!-- Footer Copyright Line -->
+            <div class="bringer-footer-line stg-container">
+                <div class="align-center">
+                    Copyright TechRealm Pakistan© 2024. All Rights Reserved.
+                </div>
+            </div><!-- bringer-footer-line -->
+        </footer>
+	</main>
+
+    <!-- Right Click Protection Block -->
+    <div class="bringer-rcp-wrap">
+        <div class="bringer-rcp-overlay"></div>
+        <div class="bringer-rcp-container">
+            <h2>The context menu is not allowed on this page.</h2>
+        </div>
+    </div>
+
+    <!-- Dynamic Backlight -->
+    <div class="bringer-backlight"></div>
+
+    <!-- JS Scripts -->
+    <script src="js/jquery.min.js"></script>
+    <script src="js/libs.js"></script>
+    <script src="js/contact_form.js"></script>
+    <script src="js/st-core.js"></script>
+    <script src="js/classes.js"></script>
+    <script src="js/main.js"></script>
+    <script>
+        // Loader functionality
+        window.addEventListener('load', function() {
+            // Wait for a short delay to ensure all content is loaded
+            setTimeout(function() {
+                document.body.classList.add('loaded');
+            }, 500);
+        });
+
+        // Your existing JavaScript code
+        $(document).ready(function() {
+            // Your existing document ready code
+        });
+             window.onload = function() {
+            document.getElementById("popupOverlay").style.display = "flex";
+        };
+
+        // Close the popup
+        function closePopup() {
+            const overlay = document.getElementById("popupOverlay");
+            overlay.style.opacity = "0";
+            overlay.style.transition = "opacity 0.3s ease";
+            setTimeout(() => {
+                overlay.style.display = "none";
+            }, 300);
+        }
+
+        // Handle discount button click
+        function getDiscount() {
+            const input = document.getElementById('contactInput');
+            const contactType = document.getElementById('emailBtn').classList.contains('active') ? 'email' : 'phone';
+            
+            if (input.value) {
+                alert(`Thank you! Your discount has been sent to your ${contactType}: ${input.value}`);
+                closePopup();
+            } else {
+                input.style.borderColor = "#ff3333";
+                input.style.boxShadow = "0 0 0 3px rgba(255, 51, 51, 0.1)";
+                setTimeout(() => {
+                    input.style.borderColor = "#ddd";
+                    input.style.boxShadow = "inset 0 1px 3px rgba(0, 0, 0, 0.05)";
+                }, 1000);
+            }
+        }
+
+        // Toggle between email and phone
+        const emailBtn = document.getElementById('emailBtn');
+        const phoneBtn = document.getElementById('phoneBtn');
+        const contactInput = document.getElementById('contactInput');
+        
+        emailBtn.classList.add('active');
+        
+        emailBtn.addEventListener('click', function() {
+            this.style.backgroundColor = '#000';
+            this.style.color = 'white';
+            this.classList.add('active');
+            phoneBtn.style.backgroundColor = 'white';
+            phoneBtn.style.color = '#000';
+            phoneBtn.classList.remove('active');
+            contactInput.placeholder = 'Enter your email';
+            contactInput.type = 'email';
+        });
+
+        phoneBtn.addEventListener('click', function() {
+            this.style.backgroundColor = '#000';
+            this.style.color = 'white';
+            this.classList.add('active');
+            emailBtn.style.backgroundColor = 'white';
+            emailBtn.style.color = '#000';
+            emailBtn.classList.remove('active');
+            contactInput.placeholder = 'Enter your phone number';
+            contactInput.type = 'tel';
+        });
+
+
+        // ringjs
+        function tpInitiatePayment(amount, productName) {
+        // Show notification
+        const notification = document.getElementById('tpNotification');
+        notification.textContent = `Processing payment for ${productName}...`;
+        notification.classList.add('tp-show');
+        
+        // Call the payment API
+        fetch('https://pay.techrealm.pk/create-payment', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ amount: amount })
+        })
+        .then(response => response.json())
+        .then(data => {
+            if(data.payment_url) {
+                window.location.href = data.payment_url;
+            } else {
+                notification.classList.remove('tp-show');
+                alert('Payment URL not found in response.');
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            notification.classList.remove('tp-show');
+            alert('An error occurred.');
+        });
+    }
+    </script>
+
+</body></html>
