@@ -1,0 +1,699 @@
+<!DOCTYPE html><html lang="en"><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+          :root {
+          --dark-bg: #121212;
+          --card-bg: #1e1e1e;
+          --highlight-bg: #2d2d2d;
+          --text-color: #ffffff;
+          --text-secondary: #b3b3b3;
+          --accent-color: rgb(78, 119, 253);
+          --accent-hover: rgb(58, 99, 233);
+          --border-color: #333333;
+          --card-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+          --transition: all 0.3s ease;
+        }
+        #loader-wrapper {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1000;
+            background-color: #ffffff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        #loader {
+            border: 5px solid #f3f3f3;
+            border-top: 5px solid #3498db;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            animation: spin 1s linear infinite;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .loaded #loader-wrapper {
+            visibility: hidden;
+            opacity: 0;
+            transition: all 0.3s ease-out;
+        }
+           /* Main Container Styles */
+           .container {
+          max-width: 1200px;
+          margin: 0 auto;
+          padding: 2rem 1rem;
+        }
+        
+        /* Content Layout */
+        .content-wrapper {
+          display: flex;
+          flex-wrap: wrap;
+          gap: 2rem;
+          align-items: center;
+          margin-bottom: 2rem;
+        }
+        
+        .text-section {
+          flex: 1;
+          min-width: 300px;
+        }
+        
+        .image-container {
+          flex: 1;
+          min-width: 300px;
+          display: flex;
+          justify-content: center;
+        }
+        
+        .row-container {
+          display: flex;
+          flex-wrap: wrap;
+          gap: 2rem;
+          align-items: center;
+        }
+        
+        .content-column {
+          flex: 2;
+          min-width: 300px;
+        }
+        
+        .image-column {
+          flex: 1;
+          min-width: 300px;
+          display: flex;
+          justify-content: center;
+        }
+        
+        .full-width {
+          flex: 1 1 100%;
+        }
+        
+        /* Card Styles */
+        .card {
+          background-color: var(--card-bg);
+          border-radius: 10px;
+          padding: 2rem;
+          margin-bottom: 2rem;
+          box-shadow: var(--card-shadow);
+          transition: var(--transition);
+          border-left: 4px solid var(--accent-color);
+        }
+        
+        .card:hover {
+          transform: translateY(-5px);
+          box-shadow: 0 8px 30px rgba(0, 0, 0, 0.6);
+        }
+        
+        .highlight-card {
+          background-color: var(--highlight-bg);
+        }
+        
+        .contact-card {
+          background-color: var(--highlight-bg);
+        }
+        
+        /* Typography Styles */
+        .main-title {
+          font-size: 2.5rem;
+          margin-bottom: 1.5rem;
+          color: var(--accent-color);
+          position: relative;
+          padding-bottom: 0.5rem;
+        }
+        
+        .main-title::after {
+          content: "";
+          position: absolute;
+          bottom: 0;
+          left: 0;
+          width: 100px;
+          height: 3px;
+          background-color: var(--accent-color);
+        }
+        
+        .section-heading {
+          font-size: 1.8rem;
+          margin-bottom: 1rem;
+          color: var(--accent-color);
+        }
+        
+        .description {
+          margin-bottom: 1.5rem;
+        }
+        
+        .large-text {
+          font-size: 1.2rem;
+          line-height: 1.8;
+        }
+        
+        /* List Styles */
+        .marked-list {
+          list-style: none;
+          margin-left: 1rem;
+          margin-bottom: 1.5rem;
+        }
+        
+        .marked-list li {
+          position: relative;
+          padding-left: 1.5rem;
+          margin-bottom: 0.8rem;
+        }
+        
+        /* .marked-list li::before {
+          content: "•";
+          color: var(--accent-color);
+          position: absolute;
+          left: 0;
+          font-size: 1.2rem;
+        } */
+        
+        /* Image Styles */
+        .company-logo,
+        .responsive-image {
+          max-width: 100%;
+          height: auto;
+          border-radius: 10px;
+          box-shadow: var(--card-shadow);
+          transition: var(--transition);
+          height: 350px;
+        }
+        
+        .company-logo:hover,
+        .responsive-image:hover {
+          transform: scale(1.02);
+        }
+        
+        /* Contact Grid */
+        .contact-grid {
+          display: grid;
+          grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+          gap: 2rem;
+        }
+        
+        .contact-section h4 {
+          display: flex;
+          align-items: center;
+          gap: 0.5rem;
+          margin-bottom: 1rem;
+          color: var(--accent-color);
+        }
+        
+        .contact-section h4 i {
+          font-size: 1.2rem;
+        }
+        
+       
+        /* Animation Classes */
+        .animate {
+          animation: fadeIn 0.8s ease forwards;
+        }
+        
+        @keyframes fadeIn {
+          from {
+            opacity: 0;
+            transform: translateY(20px);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+        
+        /* Responsive Styles */
+        @media (max-width: 992px) {
+          .bringer-header-mp {
+            display: none;
+          }
+          
+          .bringer-header-inner {
+            display: none;
+          }
+          
+          .bringer-mobile-header-inner {
+            display: flex;
+          }
+          
+          .bringer-menu-toggler-icon {
+            display: inline-block;
+            cursor: pointer;
+          }
+          
+          .bringer-menu-toggler-icon span {
+            display: block;
+            width: 24px;
+            height: 2px;
+            background-color: var(--text-color);
+            margin: 6px 0;
+            transition: var(--transition);
+          }
+        }
+        
+        @media (max-width: 768px) {
+          .main-title {
+            font-size: 2rem;
+          }
+        
+          .section-heading {
+            font-size: 1.5rem;
+          }
+          
+          .content-wrapper,
+          .row-container {
+            flex-direction: column;
+          }
+          
+          .image-container,
+          .image-column {
+            order: 2;
+          }
+          
+          .contact-grid {
+            grid-template-columns: 1fr;
+          }
+        }
+        
+        @media (max-width: 480px) {
+          .main-title {
+            font-size: 1.8rem;
+          }
+        
+          .section-heading {
+            font-size: 1.3rem;
+          }
+        
+          .card {
+            padding: 1.5rem;
+          }
+        }
+    </style>
+    <!-- Page Title -->
+    <title>Techrealm | About Us</title>
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+    <!-- Config -->
+    <link type="text/css" rel="stylesheet" href="css/config.css">
+    <!-- Libraries -->
+    <link type="text/css" rel="stylesheet" href="css/libs.css">
+    <!-- Template Styles -->
+    <link type="text/css" rel="stylesheet" href="css/style.css">
+    <!-- Responsive -->
+    <link type="text/css" rel="stylesheet" href="css/responsive.css">
+
+    <!-- Favicon -->
+    <link rel="icon" href="images/favicon.png" sizes="32x32">
+</head>
+<body>
+    <div id="loader-wrapper">
+        <div id="loader"></div>
+    </div>
+     <!-- Header -->
+    <header id="bringer-header" class="is-frosted is-sticky" data-appear="fade-down" data-unload="fade-up">
+        <!-- Desktop Header -->
+        <div class="bringer-header-inner">
+            <!-- Header Logo -->
+            <div class="bringer-header-lp">
+                <a href="./" class="bringer-logo">
+                  <h2 style="font-size:30px;">Tech<span style="color:rgb(78, 119, 253);">Realm</span></h2> 
+                </a>
+            </div>
+            <!-- Main Menu -->
+            <div class="bringer-header-mp">
+                <nav class="bringer-nav">
+                    <ul class="main-menu" data-stagger-appear="fade-down" data-stagger-delay="75">
+                        <li class="current-menu-parent">
+                            <a href="/index.html">Home</a>
+                        </li>
+                        <li>
+                            <a href="/about/about.html">About Us</a>
+                        </li>
+                        <li>
+                            <a href="/services/service.html">Our Services</a>
+                        </li>
+                        <li>
+                            <a href="/portfolio/folio.html">Portfolio</a>
+                        </li>
+                        <li>
+                            <a href="/contact/contact.html">Contact</a>
+                        </li>
+                        <li>
+                            <a href="./blog/blog.html">Blog</a>
+                        </li>
+                         <li>
+                            <a href="./invest/invest.html">Invest Now</a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+            <!-- Header Button -->
+            <div class="bringer-header-rp">
+                <a href="https://wa.me/923461115757?text=Directly%20Contact%20our%20CEO%21" class="bringer-button">Get a FREE Quote</a>
+            </div>
+        </div>
+        <!-- Mobile Header -->
+        <div class="bringer-mobile-header-inner">
+            <a href="./" class="bringer-logo">
+                <h2 style="font-size:30px;">Tech<span style="color:rgb(78, 119, 253);">Realm</span></h2> 
+            </a>
+            <a href="#" class="bringer-mobile-menu-toggler">
+                <i class="bringer-menu-toggler-icon">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </i>
+            </a>
+        </div>
+    </header>
+
+    <!-- Page Main -->
+    <main id="bringer-main">
+        <div class="container">
+            <section>
+                <!-- Block: Page Title -->
+                <div class="legal-container">
+                    <div class="content-wrapper">
+                        <div class="text-section">
+                            <h1 class="main-title">TechRealm – Legal Disclosure & Company Registration</h1>
+                            <div class="info-block">
+                                <h2 class="section-heading">1. Company Overview</h2>
+                                <p class="description">TechRealm is a private limited company (Pvt. Ltd.) operating under a formal partnership with Aljash Trading (AJT), a registered entity authorized for international trade. This partnership enables us to engage lawfully in global commercial activities. Additionally, TechRealm plans to enhance its independence by registering as a Limited Liability Company (LLC) in the United States in the near future.</p>
+                            </div>
+                        </div>
+                        <div class="image-container" data-appear="fade-in" data-delay="300">
+                            <img class="company-logo" src="/legal-disclosure/images/img1.jpeg" alt="TechRealm Logo">
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Block: Registration & Compliance -->
+                <div class="card">
+                    <div class="row-container">
+                        <div class="content-column">
+                            <h2 class="section-heading">Registration & Compliance</h2>
+                            <div class="legal-details">
+                                <p class="company-info">
+                                    <strong>Legal Name:</strong> TechRealm Pvt. Ltd.<br>
+                                    <strong>Registration Number:</strong> [Registration ID in Your Jurisdiction]<br>
+                                    <strong>Registered Address:</strong> [Registered Office, City, State/Province, Country]<br>
+                                    <strong>Operational Address (if different):</strong> [Main Office, City, State/Province, Country]
+                                </p>
+                                <p class="partnership-info">
+                                    <strong>Partnership with AJT:</strong> Aljash Trading (AJT) is our recognized partner, lawfully incorporated for cross-border commercial transactions.<br>
+                                    <strong>Future US LLC Registration:</strong> TechRealm intends to register as an LLC in the United States for expanded operational flexibility and autonomy.
+                                </p>
+                            </div>
+                        </div>
+                        <div class="image-column">
+                            <img class="responsive-image" src="/legal-disclosure/images/img2.jpeg" alt="TechRealm Registration">
+                        </div>
+                    </div>
+                </div>
+        
+                <!-- Block: Taxation & Financial Reporting -->
+                <div class="card">
+                    <div class="row-container">
+                        <div class="image-column">
+                            <img class="responsive-image" src="/legal-disclosure/images/img3.jpeg" alt="Financial Reporting">
+                        </div>
+                        <div class="content-column">
+                            <h2 class="section-heading">Taxation & Financial Reporting</h2>
+                            <div class="legal-details">
+                                <p class="company-info">
+                                    TechRealm abides by UAE taxation laws, ensuring compliance with all required financial regulations.
+                                    Financial records, statements, and disclosures are maintained according to UAE's corporate governance and tax obligations.
+                                    Any applicable taxes, including VAT or other levies, are diligently monitored and settled.
+                                </p>
+                                <h3 class="section-heading">International Operations & Service Offerings</h3>
+                                <p>Through our partnership with AJT, TechRealm engages in lawful cross-border trade, providing products and services worldwide.</p>
+                                <ul class="marked-list">
+                                    <li><strong>International Trade:</strong> Through our partnership with AJT, TechRealm engages in lawful cross-border trade, providing products and services worldwide.</li>
+                                    <li><strong>SaaS Platforms:</strong> We develop and operate Software-as-a-Service (SaaS) applications, available globally under valid licensing and subscription models.</li>
+                                    <li><strong>eCommerce Stores:</strong> Our eCommerce platforms cater to both regional and international customers, offering secure transactions and reliable product delivery.</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+        
+                <!-- Block: Sale of Startups & Companies -->
+                <div class="card">
+                    <div class="row-container">
+                        <div class="content-column full-width">
+                            <h2 class="section-heading">Sale of Startups & Companies</h2>
+                            <div>
+                                <ul class="marked-list">
+                                    <li>TechRealm may offer startups or established businesses to interested buyers or investors.</li>
+                                    <li>Ownership transfers, acquisitions, and equity purchases are conducted in accordance with all relevant jurisdictional laws.</li>
+                                    <li>Prospective buyers receive required documentation and risk disclosures.</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="image-column">
+                            <img class="responsive-image" src="/legal-disclosure/images/img4.jpeg" alt="Startup Sale">
+                        </div>
+                    </div>
+                </div>
+        
+                <!-- Block: Secure Payments & Payment Gateway -->
+                <div class="card">
+                    <div class="row-container">
+                        <div class="content-column full-width">
+                            <h2 class="section-heading">Secure Payments & Payment Gateway</h2>
+                            <div>
+                                <p>All transactions are processed via the CCAVENUE secure payment gateway, authorized by AJT.</p>
+                                <p>CCAVENUE meets international security standards, employing encryption to protect sensitive data.</p>
+                                <p>TechRealm does not store sensitive payment information; we rely on CCAVENUE's secure infrastructure for transactions.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+        
+                <!-- Block: Disclaimer & Liability -->
+                <div class="card">
+                    <div class="row-container">
+                        <div class="content-column full-width">
+                            <h2 class="section-heading">Disclaimer & Liability</h2>
+                            <div>
+                                <p><strong>No Warranty:</strong> Information on this page or in our communications is provided "as is." TechRealm assumes no responsibility for completeness or accuracy beyond what the law requires.</p>
+                                <p><strong>No Legal/Financial Advice:</strong> Nothing presented here or elsewhere by TechRealm constitutes legal or financial advice. Consult qualified professionals for personalized guidance.</p>
+                                <p><strong>Limitation of Liability:</strong> TechRealm and AJT shall not be liable for indirect or consequential damages, except where mandated by applicable law.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+        
+                <!-- Block: Governing Law & Jurisdiction -->
+                <div class="card highlight-card">
+                    <div class="row-container">
+                        <div class="content-column full-width">
+                            <h2 class="section-heading">Governing Law & Jurisdiction</h2>
+                            <p class="large-text">
+                                This disclosure and related agreements are governed by United Arab Emirates (UAE) law. Any disputes arising hereunder shall be resolved in competent courts of the UAE, unless both parties agree in writing to an alternative forum.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+        
+                <!-- Block: Contact Information -->
+                <div class="card contact-card">
+                    <div class="row-container">
+                        <div class="content-column full-width">
+                            <h2 class="section-heading">Contact Information</h2>
+                            <div class="contact-grid">
+                                <div class="contact-section">
+                                    <h4><i class="fas fa-phone"></i> Telephone:</h4>
+                                    <ul class="marked-list">
+                                        <li><strong>US:</strong> +1 (608) 443-7819</li>
+                                        <li><strong>Australia:</strong> +61 499 273 955</li>
+                                        <li><strong>Pakistan:</strong> +92 346 111 5757</li>
+                                        <li><strong>India:</strong> +91 97186 88880</li>
+                                        <li><strong>UAE:</strong> +971 55 587 3714</li>
+                                    </ul>
+                                </div>
+                                
+                                <div class="contact-section">
+                                    <h4><i class="fas fa-map-marker-alt"></i> Locations:</h4>
+                                    <ul class="marked-list">
+                                        <li><strong>Dubai:</strong> Building Number 1, Baniyas West Fourth, Baniyas Abu Dhabi, UAE</li>
+                                        <li><strong>Australia:</strong> 29 Newhaven Dr, Williams Landing VIC 3027, Australia</li>
+                                        <li><strong>USA:</strong> 339 W Gorham St, Madison, WI 53703, United States</li>
+                                        <li><strong>Pakistan:</strong> GTC 1st Floor, 8-F, Gulberg 2, Lahore, Pakistan</li>
+                                        <li><strong>India:</strong> B-132, B Block, Sector 2, Noida, Uttar Pradesh 201301, India</li>
+                                    </ul>
+                                </div>
+                                
+                                <div class="contact-section">
+                                    <h4><i class="fas fa-envelope"></i> Email:</h4>
+                                    <ul class="marked-list">
+                                        <li>info@techrealm.pk</li>
+                                        <li>info@digitalsoftwaremarket.com</li>
+                                        <li>info@zuhd.store</li>
+                                        <li>info@techsaga.co.in</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+        
+                <!-- Block: Modifications & Updates -->
+                <div class="card">
+                    <div class="row-container">
+                        <div class="content-column full-width">
+                            <h2 class="section-heading">Modifications & Updates</h2>
+                            <div>
+                                <p>
+                                    TechRealm reserves the right to amend or update this Legal Disclosure & Company Registration page at any time. 
+                                    We will post notices of changes on our official website, along with the date of the last revision.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+          <!-- Footer -->
+          <footer id="bringer-footer" data-appear="fade-up" data-unload="fade-down">
+            <!-- Footer Widgets Area -->
+            <div class="bringer-footer-widgets">
+                <div class="stg-container">
+                    <div class="stg-row" data-stagger-appear="fade-left" data-stagger-delay="100">
+                        <div class="stg-col-5 stg-tp-col-12 stg-tp-bottom-gap-l">
+                            <div class="bringer-info-widget">
+                                <a href="./" class="bringer-logo footer-logo">
+                                    <h2 style="font-size:30px;">Tech<span style="color:rgb(78, 119, 253);">Realm</span></h2> 
+
+                                </a>
+                                <div class="bringer-info-description">At TechRealm, we are a passionate team of developers and designers who harness creativity to build powerful digital experiences. We help innovators establish a strong online presence that showcases their work and tells their unique story.</div>
+                                <span class="bringer-label">Email us:Info@techrealm.pk </span>
+                                <span class="bringer-label">Contact us:971589428826 </span>
+                                <span class="bringer-label">Follow us:</span>
+                                <ul class="bringer-socials-list" data-stagger-appear="fade-up" data-stagger-delay="75">
+                                    <li>
+                                        <a href="#" target="_blank" class="bringer-socials-facebook">
+                                            <i></i>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#" target="_blank" class="bringer-socials-instagram">
+                                            <i></i>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#" target="_blank" class="bringer-socials-x">
+                                            <i></i>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#" target="_blank" class="bringer-socials-tiktok">
+                                            <i></i>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#" target="_blank" class="bringer-socials-patreon">
+                                            <i></i>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="stg-col-2 stg-offset-1 stg-tp-col-4 stg-m-col-4">
+                            <div class="bringer-widget">
+                                <h6>Services</h6>
+                                <div class="bringer-menu-widget">
+                                    <ul>
+                                        <li><a href="service-details.html">Software Development</a></li>
+                                        <li><a href="service-details.html">AI Development</a></li>
+                                        <li><a href="service-details.html">Digital Marketing</a></li>
+                                        <li><a href="service-details.html">Ecommerce integration</a></li>
+                                        <li><a href="service-details.html">Products</a></li>
+                                    </ul>
+                                </div>
+                            </div><!-- .bringer-widget -->
+                        </div>
+                        <div class="stg-col-2 stg-tp-col-4 stg-m-col-4">
+                            <div class="bringer-widget">
+                                <h6>Our Locations</h6>
+                                <div class="bringer-menu-widget">
+                                    <ul>
+                                        <li><a href="location-dubai.html">Dubai:Building Number 1, Baniyas West Fourth, Baniyas Abu Dhabi, UAE</a></li>
+                                        <li><a href="location-newyork.html">Australia branch:29 Newhaven Dr, Williams Landing VIC 3027, Australia </a></li>
+                                        <li><a href="location-london.html">Usa branch:339 W Gorham St, Madison, WI 53703, United States</a></li>
+                                        <li><a href="location-toronto.html">Pakistan branch:GTC 1st Floor , 8-F, Gulberg 2, Lahore, Pakistan </a></li>
+                                        <li><a href="location-sydney.html">India branch:B-132, B Block, Sector 2, Noida, Uttar Pradesh 201301, India </a></li>
+                                    </ul>
+                                </div>
+                            </div><!-- .bringer-widget -->
+                        </div>
+                        
+                        <div class="stg-col-2 stg-tp-col-4 stg-m-col-4">
+                            <div class="bringer-widget">
+                                <h6>Resources</h6>
+                                <div class="bringer-menu-widget">
+                                    <ul>
+                                        <li><a href="pricing.html">Pricing</a></li>
+                                        <li><a href="faq.html">Help Center</a></li>
+                                        <li><a href="services.html">Our Services</a></li>
+                                        <li><a href="#">Terms of Use</a></li>
+                                        <li><a href="#">Privacy Policy</a></li>
+                                    </ul>
+                                </div>
+                            </div><!-- .bringer-widget -->
+                        </div>
+                    </div><!-- .stg-row -->
+                </div><!-- .stg-container -->
+            </div><!-- .bringer-footer-widgets -->
+
+            <!-- Footer Copyright Line -->
+            <div class="bringer-footer-line stg-container">
+                <div class="align-center">
+                    Copyright TechRealm Pakistan© 2024. All Rights Reserved.
+                </div>
+            </div><!-- bringer-footer-line -->
+        </footer>
+	</main>
+
+    <!-- Right Click Protection Block -->
+    <div class="bringer-rcp-wrap">
+        <div class="bringer-rcp-overlay"></div>
+        <div class="bringer-rcp-container">
+            <h2>The context menu is not allowed on this page.</h2>
+        </div>
+    </div>
+
+    <!-- Dynamic Backlight -->
+    <div class="bringer-backlight"></div>
+
+    <!-- JS Scripts -->
+    <script src="js/jquery.min.js"></script>
+    <script src="js/libs.js"></script>
+    <script src="js/contact_form.js"></script>
+    <script src="js/st-core.js"></script>
+    <script src="js/classes.js"></script>
+    <script src="js/main.js"></script>
+    <script>
+        // Loader functionality
+        window.addEventListener('load', function() {
+            // Wait for a short delay to ensure all content is loaded
+            setTimeout(function() {
+                document.body.classList.add('loaded');
+            }, 500);
+        });
+
+        // Your existing JavaScript code
+        $(document).ready(function() {
+            // Your existing document ready code
+        });
+    </script>
+
+</body></html>

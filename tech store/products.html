@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Products - TechRealm</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <!-- Logo -->
+                <a href="index.html" class="logo">
+                    <span>TechRealm</span>
+                </a>
+
+                <!-- Desktop Navigation -->
+                <nav class="nav-desktop">
+                    <a href="index.html" class="nav-link">Home</a>
+                    <a href="products.html" class="nav-link active">Products</a>
+                    <a href="#" class="nav-link">Categories</a>
+                    <a href="#" class="nav-link">Deals</a>
+                </nav>
+
+                <!-- Desktop Actions -->
+                <div class="header-actions">
+                    <button class="icon-btn">
+                        <i class="fas fa-search"></i>
+                    </button>
+                    <a href="#" class="icon-btn">
+                        <i class="fas fa-user"></i>
+                    </a>
+                    <a href="cart.html" class="icon-btn cart-btn">
+                        <i class="fas fa-shopping-cart"></i>
+                        <span class="cart-count">3</span>
+                    </a>
+                </div>
+
+                <!-- Mobile Menu Button -->
+                <button class="menu-toggle">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Mobile Menu -->
+        <div class="mobile-menu">
+            <div class="container">
+                <nav class="nav-mobile">
+                    <a href="index.html" class="nav-link">Home</a>
+                    <a href="products.html" class="nav-link active">Products</a>
+                    <a href="#" class="nav-link">Categories</a>
+                    <a href="#" class="nav-link">Deals</a>
+                </nav>
+                <div class="mobile-actions">
+                    <button class="icon-btn">
+                        <i class="fas fa-search"></i>
+                    </button>
+                    <a href="#" class="icon-btn">
+                        <i class="fas fa-user"></i>
+                    </a>
+                    <a href="cart.html" class="icon-btn cart-btn">
+                        <i class="fas fa-shopping-cart"></i>
+                        <span class="cart-count">3</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="container">
+        <h1 class="page-title">All Products</h1>
+        
+        <!-- Mobile Filter Toggle -->
+        <div class="mobile-filter-toggle">
+            <button id="filter-toggle-btn">
+                <i class="fas fa-filter"></i> Filters
+            </button>
+        </div>
+        
+        <div class="products-layout">
+            <!-- Filters Sidebar -->
+            <aside class="filters-sidebar" id="filters-sidebar">
+                <div class="filters-container">
+                    <h2 class="filters-title">Filters</h2>
+                    
+                    <!-- Price Range -->
+                    <div class="filter-group">
+                        <h3 class="filter-group-title">Price Range</h3>
+                        <div class="price-slider">
+                            <div class="price-inputs">
+                                <input type="range" id="price-range" min="0" max="1000" value="1000" class="price-range-input">
+                            </div>
+                            <div class="price-values">
+                                <span id="min-price">$0</span>
+                                <span id="max-price">$1000</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Categories -->
+                    <div class="filter-group">
+                        <h3 class="filter-group-title">Categories</h3>
+                        <div class="filter-options">
+                            <div class="filter-option">
+                                <input type="checkbox" id="category-laptops" class="category-filter" value="laptops">
+                                <label for="category-laptops">Laptops</label>
+                            </div>
+                            <div class="filter-option">
+                                <input type="checkbox" id="category-smartphones" class="category-filter" value="smartphones">
+                                <label for="category-smartphones">Smartphones</label>
+                            </div>
+                            <div class="filter-option">
+                                <input type="checkbox" id="category-accessories" class="category-filter" value="accessories">
+                                <label for="category-accessories">Accessories</label>
+                            </div>
+                            <div class="filter-option">
+                                <input type="checkbox" id="category-wearables" class="category-filter" value="wearables">
+                                <label for="category-wearables">Wearables</label>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Brands -->
+                    <div class="filter-group">
+                        <h3 class="filter-group-title">Brands</h3>
+                        <div class="filter-options">
+                            <div class="filter-option">
+                                <input type="checkbox" id="brand-apple" class="brand-filter" value="Apple">
+                                <label for="brand-apple">Apple</label>
+                            </div>
+                            <div class="filter-option">
+                                <input type="checkbox" id="brand-samsung" class="brand-filter" value="Samsung">
+                                <label for="brand-samsung">Samsung</label>
+                            </div>
+                            <div class="filter-option">
+                                <input type="checkbox" id="brand-dell" class="brand-filter" value="Dell">
+                                <label for="brand-dell">Dell</label>
+                            </div>
+                            <div class="filter-option">
+                                <input type="checkbox" id="brand-sony" class="brand-filter" value="Sony">
+                                <label for="brand-sony">Sony</label>
+                            </div>
+                            <div class="filter-option">
+                                <input type="checkbox" id="brand-microsoft" class="brand-filter" value="Microsoft">
+                                <label for="brand-microsoft">Microsoft</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </aside>
+            
+            <!-- Products Grid -->
+            <div class="products-content">
+                <!-- Sort and View Controls -->
+                <div class="products-controls">
+                    <div class="sort-control">
+                        <label for="sort-select">Sort by:</label>
+                        <select id="sort-select" class="sort-select">
+                            <option value="featured">Featured</option>
+                            <option value="price-low">Price: Low to High</option>
+                            <option value="price-high">Price: High to Low</option>
+                            <option value="rating">Rating</option>
+                        </select>
+                    </div>
+                    
+                    <div class="view-control">
+                        <span>View:</span>
+                        <button id="grid-view-btn" class="view-btn active">
+                            <i class="fas fa-th"></i>
+                        </button>
+                        <button id="list-view-btn" class="view-btn">
+                            <i class="fas fa-list"></i>
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Results Count -->
+                <p class="results-count" id="results-count">Showing 20 products</p>
+                
+                <!-- Products -->
+                <div class="product-grid" id="products-container">
+                    <!-- Products will be loaded via JavaScript -->
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <!-- Company Info -->
+                <div class="footer-col">
+                    <h3>TechRealm</h3>
+                    <p>Your destination for the latest and greatest tech products.</p>
+                    <div class="social-links">
+                        <a href="#" class="social-link"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+
+                <!-- Quick Links -->
+                <div class="footer-col">
+                    <h3>Quick Links</h3>
+                    <ul class="footer-links">
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="products.html">Products</a></li>
+                        <li><a href="#">About Us</a></li>
+                        <li><a href="#">Contact</a></li>
+                    </ul>
+                </div>
+
+                <!-- Categories -->
+                <div class="footer-col">
+                    <h3>Categories</h3>
+                    <ul class="footer-links">
+                        <li><a href="products.html?category=laptops">Laptops</a></li>
+                        <li><a href="products.html?category=smartphones">Smartphones</a></li>
+                        <li><a href="products.html?category=accessories">Accessories</a></li>
+                        <li><a href="products.html?category=wearables">Wearables</a></li>
+                    </ul>
+                </div>
+
+                <!-- Contact -->
+                <div class="footer-col">
+                    <h3>Contact Us</h3>
+                    <ul class="contact-info">
+                        <li>
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>123 Tech Street, Digital City, TC 12345</span>
+                        </li>
+                        <li>
+                            <i class="fas fa-phone"></i>
+                            <span>(123) 456-7890</span>
+                        </li>
+                        <li>
+                            <i class="fas fa-envelope"></i>
+                            <span>info@techrealm.com</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <p>&copy; <span id="current-year"></span> TechRealm. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+    <script>
+        // Initialize products page
+        document.addEventListener('DOMContentLoaded', function() {
+            initProductsPage();
+        });
+    </script>
+</body>
+</html>

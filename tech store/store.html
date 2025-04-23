@@ -1,0 +1,1765 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Page Title -->
+    <title>TechRealm | Your Tech Store</title>
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Config -->
+    <link type="text/css" rel="stylesheet" href="css/config.css">
+    <!-- Libraries -->
+    <link type="text/css" rel="stylesheet" href="css/libs.css">
+    <!-- Template Styles -->
+    <link type="text/css" rel="stylesheet" href="css/style.css">
+    <!-- Responsive -->
+    <link type="text/css" rel="stylesheet" href="css/responsive.css">
+    <!-- Favicon -->
+    <link rel="icon" href="images/favicon.png" sizes="32x32">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Store Styles */
+        .store-hero {
+            background: linear-gradient(135deg, #2196f3, #0d47a1);
+            color: white;
+            padding: 5rem 0;
+            text-align: center;
+        }
+
+        .store-hero-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .store-hero h1 {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        .store-hero p {
+            font-size: 1.25rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+        }
+
+        .btn-primary {
+            display: inline-block;
+            background-color: white;
+            color: #2196f3;
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.25rem;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary:hover {
+            background-color: #f5f5f5;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .btn-primary i {
+            margin-left: 0.5rem;
+        }
+
+        .featured-categories {
+            padding: 5rem 0;
+            background-color: #f9f9f9;
+        }
+
+        .section-title {
+            font-size: 2rem;
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 3rem;
+            color: #333;
+        }
+
+        .category-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .category-card {
+            display: flex;
+            align-items: center;
+            background-color: white;
+            border-radius: 0.5rem;
+            padding: 2rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+            text-decoration: none;
+            color: #333;
+        }
+
+        .category-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .category-icon {
+            font-size: 2.5rem;
+            margin-right: 1.5rem;
+        }
+
+        .category-info h3 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .category-info p {
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        .featured-products {
+            padding: 5rem 0;
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 3rem;
+        }
+
+        .view-all {
+            color: #2196f3;
+            text-decoration: none;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+        }
+
+        .view-all i {
+            margin-left: 0.5rem;
+            transition: transform 0.3s ease;
+        }
+
+        .view-all:hover i {
+            transform: translateX(3px);
+        }
+
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .product-card {
+            background-color: white;
+            border-radius: 0.5rem;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+        }
+
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .product-image {
+            height: 200px;
+            width: 100%;
+            object-fit: cover;
+        }
+
+        .product-info {
+            padding: 1.5rem;
+        }
+
+        .product-category {
+            font-size: 0.8rem;
+            color: #666;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 0.5rem;
+        }
+
+        .product-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: #333;
+        }
+
+        .product-price {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: #2196f3;
+            margin-bottom: 1rem;
+        }
+
+        .product-actions {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .add-to-cart {
+            background-color: #2196f3;
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 0.25rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .add-to-cart:hover {
+            background-color: #1976d2;
+        }
+
+        .wishlist-btn {
+            background: none;
+            border: none;
+            color: #666;
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+
+        .wishlist-btn:hover {
+            color: #e91e63;
+        }
+
+        .wishlist-btn i {
+            font-size: 1.25rem;
+        }
+
+        /* Cart Badge */
+        .cart-btn {
+            position: relative;
+        }
+
+        .cart-count {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background-color: #e91e63;
+            color: white;
+            font-size: 0.7rem;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .store-hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .category-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .product-grid {
+                grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            }
+        }
+
+        /* Store Container */
+        .store-container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+    </style>
+    <!-- Your existing styles -->
+    <style>
+        #loader-wrapper {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1000;
+            background-color: #ffffff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        #loader {
+            border: 5px solid #f3f3f3;
+            border-top: 5px solid #3498db;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            animation: spin 1s linear infinite;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .loaded #loader-wrapper {
+            visibility: hidden;
+            opacity: 0;
+            transition: all 0.3s ease-out;
+        }
+          .popup-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            backdrop-filter: blur(3px);
+        }
+
+        .popup-card {
+            background-color: white;
+            color: black;
+            max-width: 350px;
+            width: 90%;
+            position: relative;
+            text-align: center;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            overflow: hidden;
+            animation: slideIn 0.4s ease-out;
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateY(30px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .close-button {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: none;
+            border: none;
+            color: #333;
+            font-size: 1.2rem;
+            cursor: pointer;
+            padding: 5px;
+            line-height: 1;
+            z-index: 10;
+            transition: transform 0.2s;
+        }
+
+        .close-button:hover {
+            transform: scale(1.1);
+        }
+
+        .popup-title {
+            font-size: 1.4rem;
+            font-weight: 700;
+            margin: 0;
+            padding: 25px 20px 10px 20px;
+            position: relative;
+            color: #000;
+        }
+
+        .popup-title::after {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 50px;
+            height: 3px;
+            background-color: #000;
+            border-radius: 3px;
+        }
+
+        .popup-content {
+            padding: 15px 20px 0;
+        }
+
+        .popup-content p {
+            margin: 10px 0;
+            font-weight: 500;
+            font-size: 1.05rem;
+        }
+
+        .price-highlight {
+            color: #436cb8;
+            font-weight: 700;
+        }
+
+        .original-price {
+            font-size: 0.9rem;
+            color: #666;
+            margin: 5px 0 15px 0;
+            position: relative;
+            display: inline-block;
+        }
+
+        .button-container {
+            display: flex;
+            gap: 10px;
+            padding: 20px 20px 10px;
+        }
+
+        .email-button, .phone-button {
+            flex: 1;
+            padding: 12px 0;
+            border-radius: 6px;
+            border: none;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+         background-color: #000;
+
+        }
+
+        .email-button {
+            background-color: #000;
+            color: white;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .email-button:hover {
+            background-color: #222;
+            transform: translateY(-2px);
+        }
+
+        .phone-button {
+            background-color: white;
+            color: #000;
+            border: 1px solid #ddd;
+        }
+
+        .phone-button:hover {
+            background-color: #f5f5f5;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .email-input {
+            width: calc(100% - 40px);
+            margin: 15px 20px 10px;
+            padding: 14px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 14px;
+            box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s;
+        }
+
+        .email-input:focus {
+            outline: none;
+            border-color: #000;
+            box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.1);
+        }
+
+        .discount-button {
+            background-color: #000;
+            color: white;
+            border: none;
+            padding: 15px;
+            border-radius: 6px;
+            cursor: pointer;
+            width: calc(100% - 40px);
+            margin: 15px 20px 25px;
+            font-weight: 600;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
+
+        .discount-button:hover {
+            background-color: #333;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .shine-effect {
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 50px;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.2);
+            transform: skewX(-20deg);
+            animation: shine 3s infinite;
+        }
+
+        @keyframes shine {
+            0% {
+                left: -100%;
+            }
+            20% {
+                left: 100%;
+            }
+            100% {
+                left: 100%;
+            }
+        }
+
+        .dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 800px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+    padding: 20px;
+    left: -200px; /* Adjust this to center the dropdown */
+}
+
+.dropdown:hover .dropdown-content {
+    display: flex;
+}
+
+.dropdown-section {
+    /* flex: 1; */
+    padding: 0 15px;
+    border-right: 1px solid #eee;
+}
+
+.dropdown-section:last-child {
+    border-right: none;
+}
+
+.dropdown-section h3 {
+    color: #333;
+    margin-top: 0;
+    margin-bottom: 10px;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.dropdown-section ul {
+    list-style-type: none;
+    padding-left: 0;
+    margin-bottom: 20px;
+}
+
+.dropdown-section ul li {
+    padding: 5px 0;
+}
+
+.dropdown-section ul li a {
+    text-decoration: none;
+    color: #555;
+    font-size: 14px;
+}
+
+.dropdown-section ul li a:hover {
+    color: #007bff;
+}
+
+   /* Announcement bar styling */
+   .announcement-bar {
+            background-color: #222;
+            color: white;
+            height: 40px;
+            overflow: hidden;
+            position: relative;
+            display: flex;
+            align-items: center;
+            white-space: nowrap;
+        }
+        
+        .announcement-content {
+            display: flex;
+            position: absolute;
+            animation: scroll-left 30s linear infinite;
+        }
+        
+        .announcement-item {
+            display: flex;
+            align-items: center;
+            margin-right: 40px;
+        }
+        
+        .announcement-item a {
+            color: white;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .announcement-item a:hover {
+            color: #f8d948;
+        }
+        
+        .flag-icon {
+            height: 16px;
+            margin-right: 8px;
+        }
+        
+        .icon {
+            height: 16px;
+            margin-right: 8px;
+        }
+        
+        /* Animation for the scrolling effect */
+        /* @keyframes scroll-left {
+            0% {
+                transform: translateX(100%);
+            }
+            100% {
+                transform: translateX(-100%);
+            }
+        } */
+
+     .tr-body {
+           
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            flex-direction: column;
+            margin-bottom:50px;
+        } */
+        
+        .tr-heading {
+            font-size: 52px;
+            font-weight: 700;
+            color: #1887fd;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+        
+        .tr-subheading {
+            font-size: 18px;
+            color: #fdfdfd;
+            margin-bottom: 40px;
+            text-align: center;
+        }
+        
+        .tr-container {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 30px;
+        }
+        
+        .tr-product-card {
+            width: 300px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            background-color: white;
+            transition: transform 0.3s ease;
+        }
+        
+        .tr-product-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .tr-product-image {
+            width: 100%;
+            height: 220px;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .tr-product-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+        
+        .tr-product-card:hover .tr-product-image img {
+            transform: scale(1.05);
+        }
+        
+        .tr-product-info {
+            padding: 20px;
+        }
+        
+        .tr-product-name {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #333;
+        }
+        
+        .tr-product-price {
+            font-size: 22px;
+            font-weight: 700;
+            color: #1d5e91;
+            margin-bottom: 15px;
+        }
+        
+        .tr-product-description {
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 20px;
+            line-height: 1.4;
+            height: 80px;
+            overflow: hidden;
+        }
+        
+        .tr-btn-buy {
+            display: block;
+            width: 100%;
+            padding: 12px 0;
+            background-color: #1d5e91;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        
+        .tr-btn-buy:hover {
+            background-color: #144870;
+        }
+        
+        .tr-btn-buy:active {
+            transform: scale(0.98);
+        }
+        
+        .tr-notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background-color: #4CAF50;
+            color: white;
+            padding: 15px 20px;
+            border-radius: 5px;
+            opacity: 0;
+            transform: translateY(-20px);
+            transition: all 0.3s ease;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+            z-index: 1000;
+        }
+        
+        .tr-notification.tr-show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .tr-price-info {
+            font-size: 12px;
+            color: #666;
+            margin-top: 5px;
+            font-style: italic;
+        }
+        
+        @media (max-width: 1000px) {
+            .tr-container {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+        .nav-dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.nav-dropdown a {
+    text-decoration: none;
+    color: rgb(7, 6, 6);
+    padding: 10px 15px;
+    display: block;
+}
+
+.nav-dropdown-menu {
+    display: none;
+    position: absolute;
+    background-color: white;
+    min-width: 180px;
+    padding: 5px 0;
+    list-style: none;
+    top: 100%;
+    left: 0;
+    border-radius: 5px;
+    box-shadow: 0px 4px 10px hsla(0, 0%, 0%, 0.918);
+}
+
+.nav-dropdown-menu li {
+    padding: 8px 15px;
+}
+
+.nav-dropdown-menu a {
+    color: black;
+    display: block;
+   
+}
+
+.nav-dropdown-menu a:hover {
+    background-color: #070707;
+}
+
+.nav-dropdown:hover .nav-dropdown-menu {
+    display: block;
+}
+.video-background-section {
+    position: relative;
+    overflow: hidden;
+    min-height: 400px; /* Adjust based on your needs */
+    display: flex;
+    align-items: center;
+}
+
+#background-video {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: 0;
+}
+
+.video-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* Adds a dark overlay for better text readability */
+    z-index: 1;
+}
+
+.content-container {
+    position: relative;
+    z-index: 2;
+    width: 100%;
+    padding: 60px 20px;
+}
+
+ /* Common styles */
+ #techrealm-header {
+        width: 100%;
+        position: relative;
+        z-index: 1000;
+    }
+    
+    .techrealm-logo h2 {
+        margin: 0;
+        transition: all 0.3s ease;
+    }
+    
+    .techrealm-button {
+        display: inline-block;
+        padding: 10px 20px;
+        background-color: rgb(78, 119, 253);
+        color: #fff;
+        text-decoration: none;
+        border-radius: 5px;
+        font-weight: 500;
+        transition: all 0.3s ease;
+    }
+    
+    .techrealm-button:hover {
+        background-color: #2c5ae9;
+        transform: translateY(-2px);
+    }
+    
+    /* Desktop header styles */
+    .techrealm-desktop-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 20px 40px;
+        background-color: rgb(14, 13, 13);
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    }
+    
+    .main-menu-list {
+        display: flex;
+        list-style: none;
+        margin: 0;
+        padding: 0;
+    }
+    
+    .main-menu-list > li {
+        position: relative;
+        margin: 0 15px;
+        list-style: none;
+
+    }
+    
+    .main-menu-list > li > a {
+        display: block;
+        color: #fdfcfc;
+        text-decoration: none;
+        padding: 10px 0;
+        font-weight: 500;
+        list-style: none;
+        transition: all 0.3s ease;
+    }
+    
+    .main-menu-list > li > a:hover {
+        color: rgb(78, 119, 253);
+    }
+    
+    /* Submenu styles */
+    .submenu-list {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        min-width: 200px;
+        background-color: #fff;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        border-radius: 5px;
+        padding: 10px 0;
+        margin-top: 10px;
+        opacity: 0;
+        visibility: hidden;
+        transform: translateY(10px);
+        transition: all 0.3s ease;
+        z-index: 100;
+        list-style: none;
+    }
+    
+    .menu-has-children:hover .submenu-list {
+        opacity: 1;
+        visibility: visible;
+        transform: translateY(0);
+    }
+    
+    .submenu-list li a {
+        display: block;
+        padding: 8px 20px;
+        color: #333;
+        text-decoration: none;
+        transition: all 0.3s ease;
+    }
+    
+    .submenu-list li a:hover {
+        background-color: #f5f5f5;
+        color: rgb(78, 119, 253);
+    }
+    
+    /* Mega menu styles */
+    .mega-menu-content {
+        position: absolute;
+        top: 100%;
+        left: -200px;
+        width: 1000px;
+        display: flex;
+        flex-wrap: wrap;
+        background-color: #fff;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        border-radius: 5px;
+        padding: 20px;
+        margin-top: 10px;
+        opacity: 0;
+        visibility: hidden;
+        transform: translateY(10px);
+        transition: all 0.3s ease;
+        z-index: 100;
+    }
+    
+    .mega-menu-item:hover .mega-menu-content {
+        opacity: 1;
+        visibility: visible;
+        transform: translateY(0);
+    }
+    
+    .mega-menu-section {
+        width: 20%;
+        padding: 0 15px;
+    }
+    
+    .mega-menu-section h3 {
+        font-size: 16px;
+        margin-bottom: 10px;
+        color: #333;
+        font-weight: 600;
+    }
+    
+    .mega-menu-section ul {
+        list-style: none;
+        padding: 0;
+        margin: 0 0 20px 0;
+    }
+    
+    .mega-menu-section ul li a {
+        display: block;
+        padding: 5px 0;
+        color: #666;
+        text-decoration: none;
+        font-size: 14px;
+        transition: all 0.3s ease;
+    }
+    
+    .mega-menu-section ul li a:hover {
+        color: rgb(78, 119, 253);
+    }
+    
+    /* Mobile header styles */
+    .techrealm-mobile-header {
+        display: none;
+        justify-content: space-between;
+        align-items: center;
+        padding: 15px 20px;
+        background-color: #1e1b1b;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    }
+    
+    .techrealm-toggle-icon {
+        display: block;
+        width: 30px;
+        height: 22px;
+        position: relative;
+        cursor: pointer;
+    }
+    
+    .techrealm-toggle-icon span {
+        display: block;
+        position: absolute;
+        height: 3px;
+        width: 100%;
+        background: #ffffff;
+        border-radius: 3px;
+        opacity: 1;
+        left: 0;
+        transform: rotate(0deg);
+        transition: .25s ease-in-out;
+    }
+    
+    .techrealm-toggle-icon span:nth-child(1) {
+        top: 0px;
+    }
+    
+    .techrealm-toggle-icon span:nth-child(2) {
+        top: 9px;
+    }
+    
+    .techrealm-toggle-icon span:nth-child(3) {
+        top: 18px;
+    }
+    
+    .techrealm-menu-toggle.active .techrealm-toggle-icon span:nth-child(1) {
+        top: 9px;
+        transform: rotate(135deg);
+    }
+    
+    .techrealm-menu-toggle.active .techrealm-toggle-icon span:nth-child(2) {
+        opacity: 0;
+        left: -60px;
+    }
+    
+    .techrealm-menu-toggle.active .techrealm-toggle-icon span:nth-child(3) {
+        top: 9px;
+        transform: rotate(-135deg);
+    }
+    
+    /* Mobile menu styles */
+    .techrealm-mobile-menu {
+        display: none;
+        position: fixed;
+        top: 70px;
+        left: 0;
+        width: 100%;
+        height: calc(100vh - 70px);
+        background-color: #fff;
+        overflow-y: auto;
+        z-index: 1000;
+        padding: 20px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    }
+    
+    .mobile-menu-list {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+    
+    .mobile-menu-list > li {
+        border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+        padding: 10px 0;
+    }
+    
+    .mobile-menu-list > li > a {
+        display: block;
+        padding: 8px 0;
+        font-size: 16px;
+        font-weight: 500;
+        color: #333;
+        text-decoration: none;
+    }
+    
+    .mobile-submenu {
+        display: none;
+        list-style: none;
+        padding-left: 15px;
+        margin-top: 10px;
+    }
+    
+    .mobile-submenu.active {
+        display: block;
+    }
+    
+    .mobile-submenu li a {
+        display: block;
+        padding: 8px 0;
+        font-size: 14px;
+        color: #666;
+        text-decoration: none;
+    }
+    
+    .techrealm-mobile-cta {
+        margin-top: 20px;
+        text-align: center;
+    }
+    
+    /* Responsive styles */
+    @media (max-width: 992px) {
+        .techrealm-desktop-header {
+            display: none;
+        }
+        
+        .techrealm-mobile-header {
+            display: flex;
+        }
+        
+        .techrealm-mobile-menu.active {
+            display: block;
+        }
+    }
+    
+    @media (min-width: 993px) {
+        .techrealm-mobile-menu {
+            display: none !important;
+        }
+    }
+    
+    /* Additional responsive adjustments for smaller screens */
+    @media (max-width: 768px) {
+        .techrealm-mobile-header {
+            padding: 10px 15px;
+        }
+        
+        .techrealm-logo h2 {
+            font-size: 24px !important;
+        }
+    }
+    </style>
+</head>
+<body>
+    <header id="techrealm-header" class="is-frosted is-sticky" data-appear="fade-down" data-unload="fade-up">
+        <!-- Desktop Header -->
+        <div class="techrealm-desktop-header">
+            <!-- Header Logo -->
+            <div class="techrealm-logo-container">
+                <a href="./" class="techrealm-logo">
+                  <h2 style="font-size:30px;">Tech<span style="color:rgb(78, 119, 253);">Realm</span></h2> 
+                </a>
+            </div>
+            <!-- Main Menu -->
+            <div class="techrealm-menu-container">
+                <nav class="techrealm-navigation" style="width:100%;">
+                    <ul class="main-menu-list" data-stagger-appear="fade-down" data-stagger-delay="75">
+                        <li class="current-menu-item">
+                            <a href="/index.html">Home</a>
+                        </li>
+                        <li class="menu-has-children">
+                            <a href="/about/about.html">About Us <i class="fas fa-chevron-down"></i></a>
+                            <ul class="submenu-list">
+                                <li><a href="/legal-disclosure/index.html">Legal Disclosure</a></li>
+                                <li>
+                                    <a href="/invest/index.html">Invest</a>
+                                </li>
+                            </ul>
+                        </li>
+    
+                        <li class="mega-menu-item">
+                            <a href="/services/service.html">Our Services</a>
+                            <div class="mega-menu-content">
+                                <div class="mega-menu-section">
+                                    <h3>Software Development</h3>
+                                    <ul>
+                                        <li><a href="/services detail/techreaml-service1/index.html">Custom Software Development</a></li>
+                                        <li><a href="/services detail/techrealm2 - service2/index.html">Enterprise Software Development</a></li>
+                                        <li><a href="/services detail/techrealm2 - service3/index.html">Product Development</a></li>
+                                        <li><a href="/services detail/techrealm2 - service4/index.html">Web Application Development</a></li>
+                                        <li><a href="/services detail/techrealm2 - service5/index.html">Mobile Application Development</a></li>
+                                        <li><a href="/services detail/techrealm2 - service6/index.html">Cloud Application Development</a></li>
+                                    </ul>
+                                    <h3>Maintenance and Support</h3>
+                                    <ul>
+                                        <li><a href="/services detail/techrealm2 - service7/index.html">Application Support</a></li>
+                                        <li><a href="/services detail/techrealm2 - service8/index.html">Infrastructure Support</a></li>
+                                        <li><a href="/services detail/techrealm2 - service9/index.html">Customer Support</a></li>
+                                    </ul>
+                                </div>
+                                
+                                <div class="mega-menu-section">
+                                    <h3>Infrastructure</h3>
+                                    <ul>
+                                        <li><a href="/services detail/techrealm2 - service10/index.html">Cloud Infrastructure</a></li>
+                                        <li><a href="/services detail/techrealm2 - service11/index.html">Hybrid Infrastructure</a></li>
+                                        <li><a href="/services detail/techrealm2 - service12/index.html">On-Premises Infrastructure</a></li>
+                                        <li><a href="/services detail/techrealm2 - service13/index.html">Integration</a></li>
+                                        <li><a href="/services detail/techrealm2 - service14/index.html">Migration</a></li>
+                                        <li><a href="/services detail/techrealm2 - service15/index.html">Devops</a></li>
+                                    </ul>
+                                    <h3>Testing</h3>
+                                    <ul>
+                                        <li><a href="/services detail/techrealm2 - service16/index.html">Manual Testing</a></li>
+                                        <li><a href="/services detail/techrealm2 - service17/index.html">Automation Testing</a></li>
+                                        <li><a href="/services detail/techrealm2 - service18/index.html">Continuous Testing</a></li>
+                                    </ul>
+                                </div>
+                                
+                                <div class="mega-menu-section">
+                                    <h3>Digital</h3>
+                                    <ul>
+                                        <li><a href="/services detail/techrealm2 - service19/index.html">Digital Marketing</a></li>
+                                        <li><a href="/services detail/techrealm2 - Service20/index.html">Influential Marketing</a></li>
+                                        <li><a href="/services detail/techrealm2 - service21/index.html">Online Reputation Management</a></li>
+                                        <li><a href="/services detail/techrealm2 - Service22/index.html">Digital Consultation</a></li>
+                                        <li><a href="/services detail/techrealm2 - service23/index.html">Improved ROI</a></li>
+                                    </ul>
+                                    <h3>Advisory</h3>
+                                    <ul>
+                                        <li><a href="/services detail/techrealm2 - service24/index.html">Digital Transformation</a></li>
+                                        <li><a href="/services detail/techrealm2 - service25/index.html">Business Technology Consulting</a></li>
+                                        <li><a href="/services detail/techrealm2 - service26/index.html">Cloud Strategy Consulting</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </li>
+                       <li class="mega-menu-item">
+                        <a href="/services/service.html">Our Technologies</a>
+                        <div class="mega-menu-content">
+                            <div class="mega-menu-section">
+                                <h3>E-Commerce Platforms</h3>
+                                <ul>
+                                    <li><a href="/technology/techrealm2 - Service28/index.html">Magento</a></li>
+                                    <li><a href="/technology/techrealm2 - Service27/index.html">Shopify</a></li>
+                                    <li><a href="/technology/techrealm2 - Service29/index.html">OpenCart</a></li>
+                                    <li><a href="/technology/techrealm2 - Service30/index.html">WooCommerce</a></li>
+                                    <li><a href="/technology/techrealm2 - Service31/index.html">BigCommerce</a></li>
+                                </ul>
+                                <h3>CMS Platforms</h3>
+                                <ul>
+                                    <li><a href="/technology/techrealm2 - Service32/index.html">WordPress</a></li>
+                                    <li><a href="/technology/techrealm2 - Service33/index.html">Drupal</a></li>
+                                    <li><a href="/technology/techrealm2 - Service34/index.html">Joomla</a></li>
+                                </ul>
+                            </div>
+                            
+                            <div class="mega-menu-section">
+                                <h3>Frameworks & Languages</h3>
+                                <ul>
+                                    <li><a href="/technology/techrealm2 - Service35/index.html">PHP Frameworks</a></li>
+                                    <li><a href="/technology/techrealm2 - Service36/index.html">Laravel</a></li>
+                                    <li><a href="/technology/techrealm2 - Service37/index.html">Mean/Mern</a></li>
+                                    <li><a href="/technology/techrealm2 - Service38/index.html">Node.js</a></li>
+                                    <li><a href="/technology/techrealm2 - Service39/index.html">Python</a></li>
+                                </ul>
+                                <h3>Mobile Development</h3>
+                                <ul>
+                                    <li><a href="/technology/techrealm2 - Service40/index.html">iPhone</a></li>
+                                    <li><a href="/technology/techrealm2 - Service41/index.html">Android</a></li>
+                                    <li><a href="/technology/techrealm2 - Service42/index.html">React Native</a></li>
+                                </ul>
+                            </div>
+                            
+                            <div class="mega-menu-section">
+                                <h3>Enterprise Solutions</h3>
+                                <ul>
+                                    <li><a href="/technology/techrealm2 - Service43/index.html">MS Dynamics CRM</a></li>
+                                    <li><a href="/technology/techrealm2 - Service44/index.html">SharePoint</a></li>
+                                    <li><a href="/technology/techrealm2 - Service45/index.html">Microsoft Bot</a></li>
+                                </ul>
+                                <h3>Frontend Technologies</h3>
+                                <ul>
+                                    <li><a href="/technology/techrealm2 - Service46/index.html">Graphics</a></li>
+                                    <li><a href="/technology/techrealm2 - Service47/index.html">React JS</a></li>
+                                    <li><a href="/technology/techrealm2 - Service49/index.html">Angular Js</a></li>
+    
+                                </ul>
+                            </div>
+                            <div class="mega-menu-section">
+                                <h3>Industries</h3>
+                                <ul>
+                                    <li><a href="/technology/techrealm2 - Service51/index.html">E-commerce-solution</a></li>
+                                    <li><a href="/technology/techrealm2 - Service50/index.html">Real-estate</a></li>
+                                    <li><a href="/technology/techrealm2 - Service52/index.html">Retail-and-consumer-goods</a></li>
+                                </ul>
+                                <h3>Frontend Technologies</h3>
+                                <ul>
+                                    <li><a href="/technology/techrealm2 - Service53/index.html">Health Care</a></li>
+                                    <li><a href="/technology/techrealm2 - Service54/index.html">Media and Entertainment</a></li>
+                                    <li><a href="/technology/techrealm2 - Service55/index.html">Logistics and Transportation</a></li>
+                                    <li><a href="/technology/techrealm2 - Service56/index.html">Travel & Tourism</a></li>
+                                </ul>
+                                
+                            </div>
+                            <div class="mega-menu-section">
+                                <ul>
+                                    <li><a href="/technology/techrealm2 - Service57/index.html"> Banking & Finance</a></li>
+                                    <li><a href="/technology/techrealm2 - Service58/index.html">Education & E-learning</a></li>
+                                    <li><a href="/technology/techrealm2 - Service52/index.html">Retail-and-consumer-goods</a></li>
+                                </ul>
+                                <h3>Hire Us</h3>
+                                <ul>
+                                    <li><a href="/hire us/techrealm2 - Serviceh1/index.html">Hire Dedicated Developers</a></li>
+                                    <li><a href="/hire us/techrealm2 - Serviceh2/index.html">Hire-full-stack-web-developers</a></li>
+                                    <li><a href="/hire us/techrealm2 - Serviceh3/index.html">Hire PHP Developers </a></li>
+                                    <li><a href="/hire us/techrealm2 - Serviceh4/index.html">Hire Mobile Apps Developers</a></li>
+                                    <li><a href="/hire us/techrealm2 - Serviceh5/">Hire Android Developers</a></li>
+                                    <li><a href="/hire us/techrealm2 - Serviceh6/">Hire IOS Developers</a></li>
+                                    <li><a href="/hire us/techrealm2 - Serviceh9/"></a></li>
+                                    <li><a href="/hire us/techrealm2 - Serviceh7/">Hire Woocommerce Developers</a></li>
+                                    <li><a href="/hire us/techrealm2 - Serviceh8/">Hire Shopify Developers</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </li>
+                        <li>
+                            <a href="/portfolio/folio.html">Portfolio</a>
+                        </li>
+                        <li>
+                            <a href="/contact/contact.html">Contact</a>
+                        </li>
+                        <li>
+                            <a href="/blog/blog.html">Blog</a>
+                        </li>
+                        <!-- Store Link -->
+                        <li>
+                            <a href="/store/index.html">Store</a>
+                        </li>
+                        <!-- Donation Link -->
+                        <li>
+                            <a href="/donation/index.html">Donation</a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+            <!-- Header Button -->
+            <div class="techrealm-cta-container">
+                <a href="https://wa.me/923461115757?text=Directly%20Contact%20our%20CEO%21" class="techrealm-button">Get a FREE Quote</a>
+            </div>
+        </div>
+        
+        <!-- Mobile Header -->
+        <div class="techrealm-mobile-header">
+            <a href="./" class="techrealm-logo">
+                <h2 style="font-size:30px;">Tech<span style="color:rgb(78, 119, 253);">Realm</span></h2> 
+            </a>
+            <a href="#" class="techrealm-menu-toggle">
+                <i class="techrealm-toggle-icon">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </i>
+            </a>
+        </div>
+        
+        <!-- Mobile Menu -->
+        <div class="techrealm-mobile-menu">
+            <nav class="techrealm-mobile-nav">
+                <ul class="mobile-menu-list">
+                    <li class="current-menu-item">
+                        <a href="/index.html">Home</a>
+                    </li>
+                    <li class="mobile-has-children">
+                        <a href="/about/about.html">About Us <i class="fas fa-chevron-down"></i></a>
+                        <ul class="mobile-submenu">
+                            <li><a href="/legal-disclosure/index.html">Legal Disclosure</a></li>
+                            <li><a href="/invest/index.html">Invest</a></li>
+                        </ul>
+                    </li>
+                    <li class="mobile-has-children">
+                        <a href="/services/service.html">Our Services <i class="fas fa-chevron-down"></i></a>
+                        <ul class="mobile-submenu">
+                            <li><a href="/services detail/techreaml-service1/index.html">Custom Software Development</a></li>
+                            <li><a href="/services detail/techrealm2 - service2/index.html">Enterprise Software Development</a></li>
+                            <li><a href="/services detail/techrealm2 - service3/index.html">Product Development</a></li>
+                            <li><a href="/services detail/techrealm2 - service4/index.html">Web Application Development</a></li>
+                            <li><a href="/services detail/techrealm2 - service5/index.html">Mobile Application Development</a></li>
+                            <li><a href="/services detail/techrealm2 - service6/index.html">Cloud Application Development</a></li>
+                            <li><a href="/services detail/techrealm2 - service7/index.html">Application Support</a></li>
+                            <li><a href="/services detail/techrealm2 - service10/index.html">Cloud Infrastructure</a></li>
+                            <li><a href="/services detail/techrealm2 - service19/index.html">Digital Marketing</a></li>
+                            <li><a href="/services detail/techrealm2 - service24/index.html">Digital Transformation</a></li>
+                        </ul>
+                    </li>
+                    <li class="mobile-has-children">
+                        <a href="/services/service.html">Our Technologies <i class="fas fa-chevron-down"></i></a>
+                        <ul class="mobile-submenu">
+                            <li><a href="/technology/techrealm2 - Service28/index.html">Magento</a></li>
+                            <li><a href="/technology/techrealm2 - Service27/index.html">Shopify</a></li>
+                            <li><a href="/technology/techrealm2 - Service32/index.html">WordPress</a></li>
+                            <li><a href="/technology/techrealm2 - Service35/index.html">PHP Frameworks</a></li>
+                            <li><a href="/technology/techrealm2 - Service40/index.html">iPhone</a></li>
+                            <li><a href="/technology/techrealm2 - Service41/index.html">Android</a></li>
+                            <li><a href="/technology/techrealm2 - Service43/index.html">MS Dynamics CRM</a></li>
+                            <li><a href="/technology/techrealm2 - Service51/index.html">E-commerce-solution</a></li>
+                            <li><a href="/hire us/techrealm2 - Serviceh1/index.html">Hire Dedicated Developers</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="/portfolio/folio.html">Portfolio</a>
+                    </li>
+                    <li>
+                        <a href="/contact/contact.html">Contact</a>
+                    </li>
+                    <li>
+                        <a href="/blog/blog.html">Blog</a>
+                    </li>
+                    <!-- Store Link for Mobile -->
+                    <li>
+                        <a href="/store/index.html">Store</a>
+                    </li>
+                    <!-- Donation Link for Mobile -->
+                    <li>
+                        <a href="/donation/index.html">Donation</a>
+                    </li>
+                </ul>
+            </nav>
+            <div class="techrealm-mobile-cta">
+                <a href="https://wa.me/923461115757?text=Directly%20Contact%20our%20CEO%21" class="techrealm-button">Get a FREE Quote</a>
+            </div>
+        </div>
+    </header>
+    <!-- Page Main -->
+    <main id="bringer-main">
+        <!-- Store Hero Section -->
+        <section class="store-hero">
+            <div class="store-container">
+                <div class="store-hero-content">
+                    <h1>Welcome to TechRealm Store</h1>
+                    <p>Your destination for the latest and greatest tech products</p>
+                    <a href="products.html" class="btn-primary">
+                        Shop Now <i class="fas fa-arrow-right"></i>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Featured Categories -->
+        <section class="featured-categories">
+            <div class="store-container">
+                <h2 class="section-title">Featured Categories</h2>
+                <div class="category-grid">
+                    <a href="products.html?category=laptops" class="category-card">
+                        <div class="category-icon">💻</div>
+                        <div class="category-info">
+                            <h3>Laptops</h3>
+                            <p>Explore our range of laptops</p>
+                        </div>
+                    </a>
+                    <a href="products.html?category=smartphones" class="category-card">
+                        <div class="category-icon">📱</div>
+                        <div class="category-info">
+                            <h3>Smartphones</h3>
+                            <p>Explore our range of smartphones</p>
+                        </div>
+                    </a>
+                    <a href="products.html?category=accessories" class="category-card">
+                        <div class="category-icon">🎧</div>
+                        <div class="category-info">
+                            <h3>Accessories</h3>
+                            <p>Explore our range of accessories</p>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Featured Products -->
+        <section class="featured-products">
+            <div class="store-container">
+                <div class="section-header">
+                    <h2 class="section-title">Featured Products</h2>
+                    <a href="products.html" class="view-all">
+                        View All <i class="fas fa-arrow-right"></i>
+                    </a>
+                </div>
+                <div class="product-grid" id="featured-products">
+                    <!-- Product 1 -->
+                    <div class="product-card">
+                        <img src="https://placehold.co/400x300" alt="Product Image" class="product-image">
+                        <div class="product-info">
+                            <div class="product-category">Laptops</div>
+                            <h3 class="product-title">Premium Ultrabook Pro</h3>
+                            <div class="product-price">$1,299.99</div>
+                            <div class="product-actions">
+                                <button class="add-to-cart">Add to Cart</button>
+                                <button class="wishlist-btn">
+                                    <i class="far fa-heart"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Product 2 -->
+                    <div class="product-card">
+                        <img src="https://placehold.co/400x300" alt="Product Image" class="product-image">
+                        <div class="product-info">
+                            <div class="product-category">Smartphones</div>
+                            <h3 class="product-title">TechPhone 13 Pro</h3>
+                            <div class="product-price">$899.99</div>
+                            <div class="product-actions">
+                                <button class="add-to-cart">Add to Cart</button>
+                                <button class="wishlist-btn">
+                                    <i class="far fa-heart"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Product 3 -->
+                    <div class="product-card">
+                        <img src="https://placehold.co/400x300" alt="Product Image" class="product-image">
+                        <div class="product-info">
+                            <div class="product-category">Accessories</div>
+                            <h3 class="product-title">Wireless Noise-Cancelling Headphones</h3>
+                            <div class="product-price">$249.99</div>
+                            <div class="product-actions">
+                                <button class="add-to-cart">Add to Cart</button>
+                                <button class="wishlist-btn">
+                                    <i class="far fa-heart"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Product 4 -->
+                    <div class="product-card">
+                        <img src="https://placehold.co/400x300" alt="Product Image" class="product-image">
+                        <div class="product-info">
+                            <div class="product-category">Accessories</div>
+                            <h3 class="product-title">Smart Watch Series 5</h3>
+                            <div class="product-price">$349.99</div>
+                            <div class="product-actions">
+                                <button class="add-to-cart">Add to Cart</button>
+                                <button class="wishlist-btn">
+                                    <i class="far fa-heart"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer id="bringer-footer" data-appear="fade-up" data-unload="fade-down">
+            <!-- Footer Widgets Area -->
+            <div class="bringer-footer-widgets">
+                <div class="stg-container">
+                    <div class="stg-row" data-stagger-appear="fade-left" data-stagger-delay="100">
+                        <div class="stg-col-5 stg-tp-col-12 stg-tp-bottom-gap-l">
+                            <div class="bringer-info-widget">
+                                <a href="./" class="bringer-logo footer-logo">
+                                <h2 style="color: aliceblue;">Tech <span style="color: rgb(134, 133, 133);">Realm</span></h2>
+                                </a>
+                                <div class="bringer-info-description">We are a passionate team of developers and designers who believe in the power of creativity. We help creative people create a strong online presence that shows their work and tells a story.</div>
+                                <span class="bringer-label">Follow us:</span>
+                                <ul class="bringer-socials-list" data-stagger-appear="fade-up" data-stagger-delay="75">
+                                    <li>
+                                        <a href="#" target="_blank" class="bringer-socials-facebook">
+                                            <i></i>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#" target="_blank" class="bringer-socials-instagram">
+                                            <i></i>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#" target="_blank" class="bringer-socials-x">
+                                            <i></i>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#" target="_blank" class="bringer-socials-tiktok">
+                                            <i></i>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#" target="_blank" class="bringer-socials-patreon">
+                                            <i></i>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="stg-col-2 stg-offset-1 stg-tp-col-4 stg-m-col-4">
+                            <div class="bringer-widget">
+                                <h6>Services</h6>
+                                <div class="bringer-menu-widget">
+                                    <ul>
+                                        <li><a href="service-details.html">Branding</a></li>
+                                        <li><a href="service-details.html">Marketing</a></li>
+                                        <li><a href="service-details.html">Graphic Design</a></li>
+                                        <li><a href="service-details.html">Web Design</a></li>
+                                        <li><a href="service-details.html">Content Creation</a></li>
+                                    </ul>
+                                </div>
+                            </div><!-- .bringer-widget -->
+                        </div>
+                        <div class="stg-col-2 stg-tp-col-4 stg-m-col-4">
+                            <div class="bringer-widget">
+                                <h6>About Us</h6>
+                                <div class="bringer-menu-widget">
+                                    <ul>
+                                        <li><a href="about-us.html">About Us</a></li>
+                                        <li><a href="about-me.html">About Me</a></li>
+                                        <li><a href="team-member.html">Our Team</a></li>
+                                        <li><a href="testimonials.html">Testimonials</a></li>
+                                        <li><a href="contacts.html">Get in Touch</a></li>
+                                    </ul>
+                                </div>
+                            </div><!-- .bringer-widget -->
+                        </div>
+                        <div class="stg-col-2 stg-tp-col-4 stg-m-col-4">
+                            <div class="bringer-widget">
+                                <h6>Resources</h6>
+                                <div class="bringer-menu-widget">
+                                    <ul>
+                                        <li><a href="pricing.html">Pricing</a></li>
+                                        <li><a href="faq.html">Help Center</a></li>
+                                        <li><a href="services.html">Our Services</a></li>
+                                        <li><a href="#">Terms of Use</a></li>
+                                        <li><a href="#">Privacy Policy</a></li>
+                                    </ul>
+                                </div>
+                            </div><!-- .bringer-widget -->
+                        </div>
+                    </div><!-- .stg-row -->
+                </div><!-- .stg-container -->
+            </div><!-- .bringer-footer-widgets -->
+
+            <!-- Footer Copyright Line -->
+            <div class="bringer-footer-line stg-container">
+                <div class="align-center">
+                    Copyright © 2024. All Rights Reserved.
+                </div>
+            </div><!-- bringer-footer-line -->
+        </footer>
+    </main>
+
+    <!-- Right Click Protection Block -->
+    <div class="bringer-rcp-wrap">
+        <div class="bringer-rcp-overlay"></div>
+        <div class="bringer-rcp-container">
+            <h2>The context menu is not allowed on this page.</h2>
+        </div>
+    </div>
+
+    <!-- Dynamic Backlight -->
+    <div class="bringer-backlight"></div>
+
+    <!-- JS Scripts -->
+    <script src="js/jquery.min.js"></script>
+    <script src="js/libs.js"></script>
+    <script src="js/contact_form.js"></script>
+    <script src="js/st-core.js"></script>
+    <script src="js/classes.js"></script>
+    <script src="js/main.js"></script>
+
+    <!-- Store JavaScript -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Add to cart functionality
+            const addToCartButtons = document.querySelectorAll('.add-to-cart');
+            
+            addToCartButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const productCard = this.closest('.product-card');
+                    const productTitle = productCard.querySelector('.product-title').textContent;
+                    
+                    // Show notification
+                    alert(`${productTitle} has been added to your cart!`);
+                });
+            });
+            
+            // Wishlist functionality
+            const wishlistButtons = document.querySelectorAll('.wishlist-btn');
+            
+            wishlistButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const icon = this.querySelector('i');
+                    
+                    if (icon.classList.contains('far')) {
+                        icon.classList.remove('far');
+                        icon.classList.add('fas');
+                        icon.style.color = '#e91e63';
+                    } else {
+                        icon.classList.remove('fas');
+                        icon.classList.add('far');
+                        icon.style.color = '';
+                    }
+                });
+            });
+        });
+
+
+        document.addEventListener('DOMContentLoaded', function() {
+        // Mobile menu toggle
+        const menuToggle = document.querySelector('.techrealm-menu-toggle');
+        const mobileMenu = document.querySelector('.techrealm-mobile-menu');
+        
+        if (menuToggle && mobileMenu) {
+            menuToggle.addEventListener('click', function(e) {
+                e.preventDefault();
+                this.classList.toggle('active');
+                mobileMenu.classList.toggle('active');
+            });
+        }
+        
+        // Mobile submenu toggles
+        const mobileDropdowns = document.querySelectorAll('.mobile-has-children > a');
+        
+        mobileDropdowns.forEach(dropdown => {
+            dropdown.addEventListener('click', function(e) {
+                e.preventDefault();
+                const parent = this.parentNode;
+                const submenu = parent.querySelector('.mobile-submenu');
+                
+                if (submenu) {
+                    submenu.classList.toggle('active');
+                    parent.classList.toggle('active');
+                }
+            });
+        });
+        
+        // Handle window resize
+        window.addEventListener('resize', function() {
+            if (window.innerWidth > 992) {
+                if (mobileMenu.classList.contains('active')) {
+                    mobileMenu.classList.remove('active');
+                    if (menuToggle) {
+                        menuToggle.classList.remove('active');
+                    }
+                }
+            }
+        });
+    });
+    </script>
+</body>
+</html>
